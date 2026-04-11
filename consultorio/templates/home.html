@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - Consultorio Juridico{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Bienvenido, {{ user.get_full_name|default:user.username }}</h1>
+        <p class="text-gray-600 mt-1">Panel de control del Consultorio Juridico</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Total Beneficiarios -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600">Beneficiarios</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-1">{{ total_beneficiaries }}</p>
+                </div>
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </div>
+            </div>
+            <a href="{% url 'beneficiary-list' %}" class="text-sm text-blue-600 hover:text-blue-700 mt-3 inline-block">Ver todos</a>
+        </div>
+
+        <!-- Citas Pendientes -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600">Citas Pendientes</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-1">{{ pending_appointments }}</p>
+                </div>
+                <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+            </div>
+            <a href="{% url 'appointment-list' %}" class="text-sm text-blue-600 hover:text-blue-700 mt-3 inline-block">Ver citas</a>
+        </div>
+
+        <!-- Casos Activos -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600">Casos Activos</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-1">{{ active_cases }}</p>
+                </div>
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
+            </div>
+            <a href="{% url 'case-list' %}" class="text-sm text-blue-600 hover:text-blue-700 mt-3 inline-block">Ver casos</a>
+        </div>
+
+        <!-- Tasa de Asistencia -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600">Tasa de Asistencia</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-1">{{ attendance_rate }}%</p>
+                </div>
+                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                </div>
+            </div>
+            <a href="{% url 'report-dashboard' %}" class="text-sm text-blue-600 hover:text-blue-700 mt-3 inline-block">Ver reportes</a>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <a href="{% url 'beneficiary-create' %}" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:border-blue-300 hover:shadow-md transition-all group">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Registrar Beneficiario</h3>
+                    <p class="text-sm text-gray-600">Agregar nuevo usuario</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="{% url 'appointment-create' %}" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:border-green-300 hover:shadow-md transition-all group">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center group-hover:bg-green-100 transition-colors">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Agendar Cita</h3>
+                    <p class="text-sm text-gray-600">Programar nueva cita</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="{% url 'case-create' %}" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:border-purple-300 hover:shadow-md transition-all group">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center group-hover:bg-purple-100 transition-colors">
+                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Crear Caso</h3>
+                    <p class="text-sm text-gray-600">Iniciar nuevo caso</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Citas de Hoy -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-gray-900">Citas de Hoy</h2>
+                <a href="{% url 'appointment-list' %}" class="text-sm text-blue-600 hover:text-blue-700">Ver todas</a>
+            </div>
+            <div class="divide-y divide-gray-100">
+                {% for appointment in today_appointments %}
+                <a href="{% url 'appointment-detail' appointment.pk %}" class="block px-6 py-4 hover:bg-gray-50 transition-colors">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="font-medium text-gray-900">{{ appointment.beneficiary.name }}</p>
+                            <p class="text-sm text-gray-600">{{ appointment.date|time:"H:i" }} - {{ appointment.get_type_display }}</p>
+                        </div>
+                        <span class="px-2.5 py-1 text-xs font-medium rounded-full 
+                            {% if appointment.status == 'PENDING' %}bg-yellow-100 text-yellow-800
+                            {% elif appointment.status == 'CONFIRMED' %}bg-blue-100 text-blue-800
+                            {% elif appointment.status == 'COMPLETED' %}bg-green-100 text-green-800
+                            {% else %}bg-gray-100 text-gray-800{% endif %}">
+                            {{ appointment.get_status_display }}
+                        </span>
+                    </div>
+                </a>
+                {% empty %}
+                <div class="px-6 py-8 text-center text-gray-500">
+                    <svg class="w-12 h-12 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <p>No hay citas programadas para hoy</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Proximas Citas -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-gray-900">Proximas Citas</h2>
+                <a href="{% url 'appointment-create' %}" class="text-sm text-blue-600 hover:text-blue-700">Agendar</a>
+            </div>
+            <div class="divide-y divide-gray-100">
+                {% for appointment in upcoming_appointments %}
+                <a href="{% url 'appointment-detail' appointment.pk %}" class="block px-6 py-4 hover:bg-gray-50 transition-colors">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="font-medium text-gray-900">{{ appointment.beneficiary.name }}</p>
+                            <p class="text-sm text-gray-600">{{ appointment.date|date:"d M, H:i" }}</p>
+                        </div>
+                        <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800">
+                            Pendiente
+                        </span>
+                    </div>
+                </a>
+                {% empty %}
+                <div class="px-6 py-8 text-center text-gray-500">
+                    <svg class="w-12 h-12 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p>No hay citas pendientes</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
