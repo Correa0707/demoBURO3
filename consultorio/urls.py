@@ -23,6 +23,8 @@ from .views import (
     StudentListView, StudentDetailView,
     # Legal Rooms
     LegalRoomListView, LegalRoomCreateView,
+    # Admin
+    AdminLoginView, AdminDashboardView, AdminCreateTeacherView, AdminCreateStudentView,
 )
 
 urlpatterns = [
@@ -80,4 +82,10 @@ urlpatterns = [
     # Legal Rooms
     path('salas/', LegalRoomListView.as_view(), name='legal-room-list'),
     path('salas/crear/', LegalRoomCreateView.as_view(), name='legal-room-create'),
+    
+    # Admin
+    path('admin-login/', AdminLoginView.as_view(), name='admin-login'),
+    path('admin-dashboard/', AdminDashboardView.as_view(), name='admin-dashboard'),
+    path('admin/asesores/crear/', AdminCreateTeacherView.as_view(), name='admin-create-teacher'),
+    path('admin/estudiantes/crear/', AdminCreateStudentView.as_view(), name='admin-create-student'),
 ]
