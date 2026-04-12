@@ -812,3 +812,171 @@ class LegalRoomCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         messages.success(self.request, 'Sala juridica creada exitosamente')
         return super().form_valid(form)
+
+
+# ==================== ADMIN VIEWS ====================
+
+import unicodedata
+from .models import SystemRole
+from .forms import AdminTeacherCreationForm, AdminStudentCreationForm
+
+
+def normalize_name(name):
+    """Normaliza un nombre: elimina tildes y caracteres especiales, convierte a minusculas"""
+    # Normalizar a forma NFD (descompone caracteres acentuados)
+    normalized = unicodedata.normalize('NFD', name)
+    # Eliminar caracteres de marcas diacriticas
+    ascii_name = ''.join(char for char in normalized if unicodedata.category(char) != 'Mn')
+    # Convertir a minusculas y eliminar espacios
+    return ascii_name.lower().strip()
+
+
+class AdminRequiredMixin(LoginRequiredMixin):
+    """Mixin que verifica que el usuario sea administrador"""
+    
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+        if request.user.role != SystemRole.ADMIN:
+            messages.error(request, 'No tienes permisos para acceder a esta seccion.')
+            return redirect('home')
+        return super().dispatch(request, *args, **kwargs)
+
+
+class AdminLoginView(View):
+    """Vista de inicio de sesion para administradores"""
+    
+    def get(self, request):
+        if request.user.is_authenticated:
+            if request.user.role == SystemRole.ADMIN:
+                return redirect('admin-dashboard')
+            return redirect('home')
+        return render(request, 'admin/admin_login.html')
+    
+    def post(self, request):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        
+        if user:
+            if user.role == SystemRole.ADMIN:
+                login(request, user)
+                messages.success(request, f'Bienvenido Administrador, {user.get_full_name() or user.username}')
+                return redirect('admin-dashboard')
+            else:
+                messages.error(request, 'Este acceso es exclusivo para administradores.')
+                return render(request, 'admin/admin_login.html')
+        
+        messages.error(request, 'Usuario o contrasena incorrectos')
+        return render(request, 'admin/admin_login.html')
+
+
+class AdminDashboardView(AdminRequiredMixin, TemplateView):
+    """Panel de control del administrador"""
+    template_name = 'admin/dashboard.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['total_teachers'] = SystemUser.objects.filter(role=SystemRole.TEACHER).count()
+        context['total_students'] = Student.objects.count()
+        context['total_users'] = SystemUser.objects.count()
+        return context
+
+
+class AdminCreateTeacherView(AdminRequiredMixin, View):
+    """Vista para crear asesores (profesores)"""
+    template_name = 'admin/create_teacher.html'
+    
+    def get(self, request):
+        form = AdminTeacherCreationForm()
+        return render(request, self.template_name, {'form': form})
+    
+    def post(self, request):
+        form = AdminTeacherCreationForm(request.POST)
+        
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            cedula = form.cleaned_data['cedula']
+            email = form.cleaned_data['email']
+            
+            # Generar contrasena: primer_nombre_normalizado + cedula
+            first_name_normalized = normalize_name(first_name.split()[0])
+            password = f"{first_name_normalized}{cedula}"
+            
+            # Crear usuario con rol TEACHER
+            user = SystemUser.objects.create_user(
+                username=cedula,
+                email=email,
+                first_name=first_name,
+                last_name=last_name,
+                password=password,
+                role=SystemRole.TEACHER,
+                is_active=True
+            )
+            
+            messages.success(request, 'Asesor creado exitosamente')
+            return render(request, self.template_name, {
+                'form': AdminTeacherCreationForm(),
+                'created_user': user,
+                'generated_password': password
+            })
+        
+        return render(request, self.template_name, {'form': form})
+
+
+class AdminCreateStudentView(AdminRequiredMixin, View):
+    """Vista para crear estudiantes"""
+    template_name = 'admin/create_student.html'
+    
+    def get(self, request):
+        form = AdminStudentCreationForm()
+        return render(request, self.template_name, {'form': form})
+    
+    def post(self, request):
+        form = AdminStudentCreationForm(request.POST)
+        
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            cedula = form.cleaned_data['cedula']
+            email = form.cleaned_data['email']
+            student_code = form.cleaned_data['student_code']
+            semester = form.cleaned_data['semester']
+            legal_office = form.cleaned_data['legal_office']
+            attendance_days = form.cleaned_data['attendance_days']
+            
+            # Generar contrasena: primer_nombre_normalizado + cedula
+            first_name_normalized = normalize_name(first_name.split()[0])
+            password = f"{first_name_normalized}{cedula}"
+            
+            # Crear usuario con rol STUDENT
+            user = SystemUser.objects.create_user(
+                username=cedula,
+                email=email,
+                first_name=first_name,
+                last_name=last_name,
+                password=password,
+                role=SystemRole.STUDENT,
+                is_active=True
+            )
+            
+            # Crear perfil de estudiante
+            student = Student.objects.create(
+                user=user,
+                enrollment_professional=student_code,
+                available=True,
+                semester=semester,
+                legal_office=legal_office,
+                attendance_days=', '.join(attendance_days)
+            )
+            
+            messages.success(request, 'Estudiante creado exitosamente')
+            return render(request, self.template_name, {
+                'form': AdminStudentCreationForm(),
+                'created_user': user,
+                'created_student': student,
+                'generated_password': password
+            })
+        
+        return render(request, self.template_name, {'form': form})

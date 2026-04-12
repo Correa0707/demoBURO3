@@ -353,3 +353,103 @@ class CaseReportFilterForm(forms.Form):
         label='Sala Juridica',
         required=False
     )
+
+
+# ==================== ADMIN FORMS ====================
+
+class AdminTeacherCreationForm(forms.Form):
+    """Formulario para crear asesores (profesores) desde el panel de admin"""
+    first_name = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={'class': COMMON_INPUT_CLASS, 'placeholder': 'Nombre'}),
+        label='Nombre'
+    )
+    last_name = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={'class': COMMON_INPUT_CLASS, 'placeholder': 'Apellido'}),
+        label='Apellido'
+    )
+    cedula = forms.CharField(
+        max_length=20,
+        widget=forms.TextInput(attrs={'class': COMMON_INPUT_CLASS, 'placeholder': 'Numero de cedula'}),
+        label='Cedula (sera el nombre de usuario)'
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'class': COMMON_INPUT_CLASS, 'placeholder': 'correo@ejemplo.com'}),
+        label='Correo Electronico'
+    )
+
+    def clean_cedula(self):
+        cedula = self.cleaned_data['cedula']
+        if SystemUser.objects.filter(username=cedula).exists():
+            raise forms.ValidationError('Ya existe un usuario con esta cedula.')
+        return cedula
+
+
+class AdminStudentCreationForm(forms.Form):
+    """Formulario para crear estudiantes desde el panel de admin"""
+    
+    LEGAL_OFFICE_CHOICES = [
+        ('Consultorio 1', 'Consultorio 1'),
+        ('Consultorio 2', 'Consultorio 2'),
+    ]
+    
+    DAY_CHOICES = [
+        ('Lunes', 'Lunes'),
+        ('Martes', 'Martes'),
+        ('Miercoles', 'Miercoles'),
+        ('Jueves', 'Jueves'),
+        ('Viernes', 'Viernes'),
+    ]
+    
+    first_name = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={'class': COMMON_INPUT_CLASS, 'placeholder': 'Nombre'}),
+        label='Nombre'
+    )
+    last_name = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={'class': COMMON_INPUT_CLASS, 'placeholder': 'Apellido'}),
+        label='Apellido'
+    )
+    cedula = forms.CharField(
+        max_length=20,
+        widget=forms.TextInput(attrs={'class': COMMON_INPUT_CLASS, 'placeholder': 'Numero de cedula'}),
+        label='Cedula (sera el nombre de usuario)'
+    )
+    student_code = forms.CharField(
+        max_length=50,
+        widget=forms.TextInput(attrs={'class': COMMON_INPUT_CLASS, 'placeholder': 'Codigo de estudiante'}),
+        label='Codigo de Estudiante'
+    )
+    semester = forms.CharField(
+        max_length=20,
+        widget=forms.TextInput(attrs={'class': COMMON_INPUT_CLASS, 'placeholder': 'Ej: 8vo semestre'}),
+        label='Semestre'
+    )
+    legal_office = forms.ChoiceField(
+        choices=LEGAL_OFFICE_CHOICES,
+        widget=forms.Select(attrs={'class': COMMON_SELECT_CLASS}),
+        label='Consultorio'
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'class': COMMON_INPUT_CLASS, 'placeholder': 'correo@ejemplo.com'}),
+        label='Correo Electronico'
+    )
+    attendance_days = forms.MultipleChoiceField(
+        choices=DAY_CHOICES,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'w-5 h-5 text-blue-600 rounded focus:ring-blue-500'}),
+        label='Dias de Asistencia al Consultorio'
+    )
+
+    def clean_cedula(self):
+        cedula = self.cleaned_data['cedula']
+        if SystemUser.objects.filter(username=cedula).exists():
+            raise forms.ValidationError('Ya existe un usuario con esta cedula.')
+        return cedula
+
+    def clean_student_code(self):
+        student_code = self.cleaned_data['student_code']
+        if Student.objects.filter(enrollment_professional=student_code).exists():
+            raise forms.ValidationError('Ya existe un estudiante con este codigo.')
+        return student_code

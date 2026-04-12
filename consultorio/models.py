@@ -105,6 +105,9 @@ class Student(models.Model):
     available = models.BooleanField(default=True, verbose_name="Disponible")
     reason_unavailability = models.TextField(blank=True, null=True, verbose_name="Razon de No Disponibilidad")
     area = models.CharField(max_length=100, blank=True, null=True, verbose_name="Area")
+    semester = models.CharField(max_length=20, blank=True, null=True, verbose_name="Semestre")
+    legal_office = models.CharField(max_length=50, blank=True, null=True, verbose_name="Consultorio")
+    attendance_days = models.CharField(max_length=100, blank=True, null=True, verbose_name="Dias de Asistencia")
 
     class Meta:
         verbose_name = "Estudiante"
