@@ -1,0 +1,87 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="9DD6E713-476E-83F8-4667-6205F2B491A4" name="DATA_POLICIES">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-14 17:45:59 UTC</createdTime>
+<generatorID>7F90C583-895E-2CD2-2DBA-3E97A2F003B2</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<ordsAlias>data_policy</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="BENEFICIARY_id" id="237C3BF7-F206-F9DF-4CEF-1FF2394C4A52">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-14 17:45:59 UTC</createdTime>
+<generatorID>EA3D9044-41AB-AF5C-208A-25637808D0B9</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="011582E1-41CB-1A27-9038-2ADC30DAADDB" referredColumn="380910D1-10FD-284B-4067-FDC6D8561C97"/>
+</associations>
+</Column>
+<Column name="acceptance_date" id="7A107967-D65C-E490-7207-94E5C075FB8B">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-14 17:45:59 UTC</createdTime>
+<generatorID>A8BF3FE4-E778-6B14-59E8-7B919C93E85D</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="acceptance_hour" id="B5C36E00-40F0-5F52-25C2-570D7A1DDEB7">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-14 17:45:59 UTC</createdTime>
+<generatorID>8FDB012E-02C8-E8EC-58D8-3157B761665D</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="A9908396-8EAF-B2E8-8598-4B62B745724E" name="DATA_POLICIES_PK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-14 17:45:59 UTC</createdTime>
+<generatorID>55F96BB7-2098-C62F-D7C2-5A53426EB221</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="237C3BF7-F206-F9DF-4CEF-1FF2394C4A52"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4BC600B6-B12B-5D83-09C6-BDCA318D4A6F" name="Data_policy__IDX">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-14 17:45:59 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>17735372-3E2E-EA80-785A-10A8C306D2F1</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="237C3BF7-F206-F9DF-4CEF-1FF2394C4A52"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7CD57FA4-F03D-B9F2-BC62-95CD28FE46EB" name="DATA_POLICIES_BENEFICIARY_FK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-14 17:45:59 UTC</createdTime>
+<generatorID>17735372-3E2E-EA80-785A-10A8C306D2F1</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="237C3BF7-F206-F9DF-4CEF-1FF2394C4A52"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

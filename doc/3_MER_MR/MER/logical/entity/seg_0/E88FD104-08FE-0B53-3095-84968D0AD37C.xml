@@ -1,0 +1,148 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="E88FD104-08FE-0B53-3095-84968D0AD37C" name="Beneficiary">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 20:44:14 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<hierarchicalParent>802A89D0-22E3-471B-E675-64DC2123554E</hierarchicalParent>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="phone" id="2E234305-EE8E-C3B2-7102-6029D0FDB7DD">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 20:46:35 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="age" id="CB0A9885-B31E-AF76-C8BF-18C091B2094F">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 20:51:26 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<ownDataTypeParameters>,3,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id" id="E68D8B59-CC33-9A8C-959C-744693FCC663">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 22:46:18 UTC</createdTime>
+<generatorID>3C2C9173-9CEF-CB41-8BEC-76F18F1C0E80</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>7815889A-0F41-0406-1B96-32C2C42ADFB4</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,,2</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id1" id="62B9349C-F9AC-A5D1-0975-FD3D75162840">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 22:50:29 UTC</createdTime>
+<generatorID>315E1597-2464-53AA-CEDE-50FC4BA843BA</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>D8428B85-C47B-243C-E582-15F9E433B146</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,,2</ownDataTypeParameters>
+</Attribute>
+<Attribute name="stratum" id="6E5B4343-6EDD-6B8D-F58B-884B5684123E">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 22:51:11 UTC</createdTime>
+<generatorID>FDE75706-A186-578D-AF2D-FD621495A40B</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>614426E6-84F2-09B1-A8AE-AC6FC01C61D5</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<dataTypeScale>1</dataTypeScale>
+<ownDataTypeParameters>,,1</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id2" id="485C812B-795E-BC2E-2357-C738367C5586">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 22:51:29 UTC</createdTime>
+<generatorID>BD0935F6-DEEC-BECD-455B-D2601D064022</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>551BEA88-2169-5183-D9D1-7FB52172FD87</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,,2</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id3" id="F6B37A2B-348F-DA7F-45BB-59CE994A7413">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 22:52:04 UTC</createdTime>
+<generatorID>0DCE1D7A-F8C0-525E-A6EB-3FEEFF5FB903</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>548DA238-A59E-192D-22B7-29D3E733B3C7</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<dataTypeScale>1</dataTypeScale>
+<ownDataTypeParameters>,,1</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id4" id="6221216B-8D64-429A-018D-A2A90337433B">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-14 17:09:44 UTC</createdTime>
+<generatorID>0B1E1734-2DC5-57F9-5167-98AF2CE04805</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>8AC68A00-4631-8C48-3D27-551A051B31AE</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<ownDataTypeParameters>,1,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+</Entity>

@@ -1,0 +1,59 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="F80EEEA5-9433-D3CC-8D76-D260A0309128" name="Disability">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 21:16:56 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="551BEA88-2169-5183-D9D1-7FB52172FD87">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 21:17:10 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<ownDataTypeParameters>,2,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="disability" id="1333A0D4-3EA4-369B-776F-20431B45D022">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 21:17:24 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<ownDataTypeParameters>30,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="BE857C5C-9049-0C98-1A85-58AAFC1C99D2" name="Disability PK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 21:17:23 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>551BEA88-2169-5183-D9D1-7FB52172FD87</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

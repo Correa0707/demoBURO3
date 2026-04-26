@@ -1,0 +1,51 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="612E6040-952B-F316-E87F-5029CC382EFA" name="MODES_APPOINTMENT">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>C654F2A7-52B9-BF8B-1E6C-AD3599CA5689</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<ordsAlias>mode_appointment</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="F00AB7A0-D4C5-5834-4C16-AAB4EAC85B85">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>880F939B-B8B2-7E91-522A-FE94042DFDB2</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeScale>1</dataTypeScale>
+<ownDataTypeParameters>,,1</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="mode" id="B7579CFC-BE0C-91E7-7963-F0815FB40FF9">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>C4CE77C3-5C63-4700-FB29-B2FEF17B03EA</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<ownDataTypeParameters>20,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="297F9B64-F01A-5725-3D10-34B488DE2A16" name="MODES_APPOINTMENT_PK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>24B09583-49D7-C010-5786-06271EBF0B22</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F00AB7A0-D4C5-5834-4C16-AAB4EAC85B85"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

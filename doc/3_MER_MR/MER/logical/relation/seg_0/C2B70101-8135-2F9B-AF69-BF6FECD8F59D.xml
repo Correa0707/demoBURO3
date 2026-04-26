@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="An appointment can be associated with a case" directorySegmentName="seg_0" id="C2B70101-8135-2F9B-AF69-BF6FECD8F59D">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-10 23:40:52 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<sourcePk>F30259F6-23B4-E6A5-EF05-AF952939CD61</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>true</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>EBE00AEF-E1B0-475C-3A80-3F80ADE5DB16</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>01AB519D-7B5E-5675-757E-7988C08144AB</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="64159EA6-7F8F-EA84-3AF9-BC27D602004C" containerWithKeyObject="8B4531AA-C71B-5BB8-89E7-0046EBAA2A78" localFKIndex="0A7F90B0-24E5-6315-C785-745B2DBB15B0" name="Details_Schedule_Schedule_FK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-15 21:37:59 UTC</createdTime>
+<generatorID>207D5B20-2AD2-EA69-D5C7-3652A6545DA1</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<referredTableLongName>Schedule</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>68C1ACB3-A14A-A53A-137F-83BF31376055</referredTableID>
+<keyObject>97B57BC9-AB2F-796F-0A9E-8667262B82D4</keyObject>
+<referredKeyID>97B57BC9-AB2F-796F-0A9E-8667262B82D4</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

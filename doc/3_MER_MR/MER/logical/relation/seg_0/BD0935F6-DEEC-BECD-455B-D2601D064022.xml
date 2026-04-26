@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="a beneficiary can have a disability" directorySegmentName="seg_0" id="BD0935F6-DEEC-BECD-455B-D2601D064022">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 22:51:29 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<sourcePk>BE857C5C-9049-0C98-1A85-58AAFC1C99D2</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>true</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>F80EEEA5-9433-D3CC-8D76-D260A0309128</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>E88FD104-08FE-0B53-3095-84968D0AD37C</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

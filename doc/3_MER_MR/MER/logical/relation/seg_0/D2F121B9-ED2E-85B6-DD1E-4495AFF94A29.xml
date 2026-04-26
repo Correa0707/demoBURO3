@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="student has many appointments" directorySegmentName="seg_0" id="D2F121B9-ED2E-85B6-DD1E-4495AFF94A29">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 21:05:46 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<sourcePk>55E0C964-E028-6AEC-4888-F4CD17141F74</sourcePk>
+<identifying>false</identifying>
+<nameOnSource>has</nameOnSource>
+<nameOnTarget>is attended by</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>34E7451C-3268-364A-624D-6FB43CA984C6</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>01AB519D-7B5E-5675-757E-7988C08144AB</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

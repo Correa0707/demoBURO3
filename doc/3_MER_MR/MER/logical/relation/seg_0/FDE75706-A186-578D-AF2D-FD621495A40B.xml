@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="a beneficiary has a stratum" directorySegmentName="seg_0" id="FDE75706-A186-578D-AF2D-FD621495A40B">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 22:51:11 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<sourcePk>3CD4C168-D911-00E3-A499-79C73FBCECEB</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>true</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>E026D4F9-227F-A17D-3FCA-0187C82CF118</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>E88FD104-08FE-0B53-3095-84968D0AD37C</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

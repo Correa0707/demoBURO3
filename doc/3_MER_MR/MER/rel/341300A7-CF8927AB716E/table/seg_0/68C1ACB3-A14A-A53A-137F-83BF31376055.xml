@@ -1,0 +1,39 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="68C1ACB3-A14A-A53A-137F-83BF31376055" name="SCHEDULES">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-15 21:37:59 UTC</createdTime>
+<generatorID>7A85552A-FCCD-6B19-06F6-9040E15F5B32</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<ordsAlias>schedule</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="345F3B10-A61E-4861-680E-56C843A03F60">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-15 21:37:59 UTC</createdTime>
+<generatorID>35AA74C2-25D9-99F4-9D9F-5B724C09D841</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<ownDataTypeParameters>,2,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="97B57BC9-AB2F-796F-0A9E-8667262B82D4" name="Schedule_PK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-15 21:37:59 UTC</createdTime>
+<generatorID>6E6BEB1F-F0DC-A539-661C-D0F50BC9CCC9</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="345F3B10-A61E-4861-680E-56C843A03F60"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

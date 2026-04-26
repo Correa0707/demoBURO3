@@ -1,0 +1,52 @@
+{% extends 'beneficiary_portal/base.html' %}
+{% block title %}Cancelar Cita{% endblock %}
+{% block content %}
+<div class="max-w-lg mx-auto px-4 py-8">
+  <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+
+    <!-- Navbar tabs -->
+    <div class="border-b border-gray-200 flex">
+      <a href="{% url 'beneficiary-portal-appointment-reschedule' appointment.pk %}"
+         class="flex-1 px-6 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 transition-colors text-center">
+        Reprogramar cita
+      </a>
+      <span class="flex-1 px-6 py-4 text-sm font-medium text-red-600 border-b-2 border-red-600 text-center cursor-default">
+        Cancelar cita
+      </span>
+    </div>
+
+    <div class="p-6">
+      <div class="text-center mb-6">
+        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900">Cancelar Cita</h2>
+        <p class="text-gray-500 text-sm mt-1">¿Estás seguro de que deseas cancelar esta cita?</p>
+      </div>
+
+      <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6 text-sm text-gray-700 space-y-1">
+        <p><strong>Fecha:</strong> {{ appointment.date|date:"d \d\e F \d\e Y" }}</p>
+        <p><strong>Hora:</strong> {{ appointment.hour }}</p>
+        <p><strong>Tipo:</strong> {{ appointment.get_type_display }}</p>
+        <p><strong>Estado actual:</strong> {{ appointment.get_status_display }}</p>
+      </div>
+
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit"
+          class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-lg transition">
+          Confirmar cancelación
+        </button>
+      </form>
+      <div class="mt-3 text-center">
+        <a href="{% url 'beneficiary-portal-appointments' %}"
+           class="text-sm text-gray-500 hover:text-gray-700">
+          Volver a mis citas
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="7F90C583-895E-2CD2-2DBA-3E97A2F003B2" name="Data_policy">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-14 17:10:06 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="acceptance_date" id="A8BF3FE4-E778-6B14-59E8-7B919C93E85D">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-14 17:10:53 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="acceptance_hour" id="8FDB012E-02C8-E8EC-58D8-3157B761665D">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-14 17:12:25 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id1" id="EA3D9044-41AB-AF5C-208A-25637808D0B9">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-14 17:13:31 UTC</createdTime>
+<generatorID>17735372-3E2E-EA80-785A-10A8C306D2F1</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<referedAttribute>7EC7A15B-79F7-7862-F09E-081CE80AA43A</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<ownDataTypeParameters>,10,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="55F96BB7-2098-C62F-D7C2-5A53426EB221" name="Data_policy PK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-14 17:10:52 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>EA3D9044-41AB-AF5C-208A-25637808D0B9</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

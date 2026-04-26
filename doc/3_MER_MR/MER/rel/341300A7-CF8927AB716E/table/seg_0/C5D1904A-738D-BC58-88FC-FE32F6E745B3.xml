@@ -1,0 +1,102 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="C5D1904A-738D-BC58-88FC-FE32F6E745B3" name="USERS">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>802A89D0-22E3-471B-E675-64DC2123554E</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<ordsAlias>user</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="2D8CC330-BAA7-1095-EFCE-FD745EEA9AB0">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>7EC7A15B-79F7-7862-F09E-081CE80AA43A</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<ownDataTypeParameters>,10,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="name" id="91495D58-A3F8-9091-A39E-83432ACA2E4E">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>448BC850-588F-949C-4FCF-59F286FD3624</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="password" id="48D6BAC7-67D4-7E96-10B1-F25908982734">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>3E3DE6AD-8CD1-F919-D4BE-80DD2728ECBA</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15</dataTypeSize>
+<ownDataTypeParameters>15,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="email" id="C26996A6-4F0D-D4D2-5250-3B2072224CA8">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>4EC5EA95-B7D0-2883-AA67-A2ADC5002F3F</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Role_id" id="3C69035C-CBE2-5DC9-9535-22C6D24124C4">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-15 21:37:59 UTC</createdTime>
+<generatorID>1580E1C8-2F28-F6CB-20BA-242417619F72</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="BCC4F32C-640C-86C7-B073-45452B8A7B25" referredColumn="BBD372C3-40FA-893E-DDF1-90231F53FE87"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D8D35DC9-04D1-6123-7EAB-FA1773DB7F74" name="USERS_PK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>55E0C964-E028-6AEC-4888-F4CD17141F74</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2D8CC330-BAA7-1095-EFCE-FD745EEA9AB0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7D1CC29C-B31E-D8F7-B3F7-BCB192B3A56A" name="User_Role_FK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-15 21:37:59 UTC</createdTime>
+<generatorID>FBB6C703-A431-8692-C777-67ACA04C34D3</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3C69035C-CBE2-5DC9-9535-22C6D24124C4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

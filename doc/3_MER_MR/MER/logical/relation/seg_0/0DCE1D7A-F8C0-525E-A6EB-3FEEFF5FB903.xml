@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="a beneficiary has a sex" directorySegmentName="seg_0" id="0DCE1D7A-F8C0-525E-A6EB-3FEEFF5FB903">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 22:52:04 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<sourcePk>1B88AA4D-654B-B543-C72C-C06C0B92F092</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>true</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>7DDB2704-8B13-AADF-F9C1-11EDD1C5BC8E</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>E88FD104-08FE-0B53-3095-84968D0AD37C</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

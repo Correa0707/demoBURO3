@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="an appointment has a mode" directorySegmentName="seg_0" id="E178FEAF-27EE-F729-E4B3-520AED9D0F13">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 22:58:48 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<sourcePk>24B09583-49D7-C010-5786-06271EBF0B22</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>C654F2A7-52B9-BF8B-1E6C-AD3599CA5689</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>01AB519D-7B5E-5675-757E-7988C08144AB</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

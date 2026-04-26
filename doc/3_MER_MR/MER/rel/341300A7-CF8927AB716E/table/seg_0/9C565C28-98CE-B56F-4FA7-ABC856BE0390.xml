@@ -1,0 +1,51 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="9C565C28-98CE-B56F-4FA7-ABC856BE0390" name="ROLES">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-15 21:37:59 UTC</createdTime>
+<generatorID>C06C434B-592E-A9AF-E8BF-F942B336E7EE</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<ordsAlias>role</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="BBD372C3-40FA-893E-DDF1-90231F53FE87">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-15 21:37:59 UTC</createdTime>
+<generatorID>12A61842-C66E-6E38-0E41-823C672F6656</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<ownDataTypeParameters>,1,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="role" id="48018721-F59B-C91D-A156-E161B3FEE89B">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-15 21:37:59 UTC</createdTime>
+<generatorID>4630DF02-0142-1624-55ED-B26539B4B9C6</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<ownDataTypeParameters>20,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="571A9248-ED1F-06FD-5465-01FCB00F5DCC" name="Role_PK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-15 21:37:59 UTC</createdTime>
+<generatorID>DA21DBC4-4FCD-5152-D3C6-D82B6162F008</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="BBD372C3-40FA-893E-DDF1-90231F53FE87"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

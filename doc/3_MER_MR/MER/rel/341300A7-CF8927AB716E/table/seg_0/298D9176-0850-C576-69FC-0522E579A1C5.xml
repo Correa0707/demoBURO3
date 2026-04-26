@@ -1,0 +1,95 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="298D9176-0850-C576-69FC-0522E579A1C5" name="CASES">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>EBE00AEF-E1B0-475C-3A80-3F80ADE5DB16</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<ordsAlias>case</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="A8573DEF-3DB8-053B-0751-6D4DD0D96497">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>5DDDD57A-D120-A162-BC3A-B7C0461867E0</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BENEFICIARY_id" id="C56D4AE5-0A64-B129-7758-0637AB543705">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>16912FE6-293B-0437-2C36-E071A141C96C</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>10</dataTypeScale>
+<ownDataTypeParameters>,,10</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="49A99B68-13F3-C91B-2F88-0BE0D891EA14" referredColumn="380910D1-10FD-284B-4067-FDC6D8561C97"/>
+</associations>
+</Column>
+<Column name="STUDENTS_id" id="49549166-E86D-CD4C-4595-9D7970557F77">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>650967DB-E12D-F272-6410-9AC32B0567A3</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>10</dataTypeScale>
+<ownDataTypeParameters>,,10</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="897381B4-F035-1AA8-B037-11BA28629894" referredColumn="3F1E4AA2-0A9F-ECC0-554B-DAC8A31EA57A"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F83DD8E8-25C6-FB2A-D2D2-4754EFE19414" name="CASES_PK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>F30259F6-23B4-E6A5-EF05-AF952939CD61</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A8573DEF-3DB8-053B-0751-6D4DD0D96497"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="1A0C8E19-9A6C-6E61-BC11-6A2D2408A20A" name="CASES_BENEFICIARY_FK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>C9F67485-29E6-B845-B081-FF60F7826ED0</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C56D4AE5-0A64-B129-7758-0637AB543705"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D7A45918-966D-AB7C-A020-A97DEE37EEEE" name="CASES_STUDENTS_FK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>17B10C48-5137-9047-168A-77BF2A9F1A9E</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="49549166-E86D-CD4C-4595-9D7970557F77"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

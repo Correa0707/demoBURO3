@@ -1,0 +1,79 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="EBE00AEF-E1B0-475C-3A80-3F80ADE5DB16" name="Case">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 20:58:22 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="5DDDD57A-D120-A162-BC3A-B7C0461867E0">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 20:59:33 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id1" id="16912FE6-293B-0437-2C36-E071A141C96C">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 21:02:24 UTC</createdTime>
+<generatorID>C9F67485-29E6-B845-B081-FF60F7826ED0</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<referedAttribute>7EC7A15B-79F7-7862-F09E-081CE80AA43A</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>10</dataTypeScale>
+<ownDataTypeParameters>,,10</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id2" id="650967DB-E12D-F272-6410-9AC32B0567A3">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 21:07:11 UTC</createdTime>
+<generatorID>17B10C48-5137-9047-168A-77BF2A9F1A9E</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<referedAttribute>7EC7A15B-79F7-7862-F09E-081CE80AA43A</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>10</dataTypeScale>
+<ownDataTypeParameters>,,10</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="F30259F6-23B4-E6A5-EF05-AF952939CD61" name="Case PK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 20:59:45 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>5DDDD57A-D120-A162-BC3A-B7C0461867E0</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

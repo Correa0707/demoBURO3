@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="beneficiary can have many cases" directorySegmentName="seg_0" id="C9F67485-29E6-B845-B081-FF60F7826ED0">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 21:02:24 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<sourcePk>55E0C964-E028-6AEC-4888-F4CD17141F74</sourcePk>
+<identifying>false</identifying>
+<nameOnSource>has</nameOnSource>
+<nameOnTarget>belongs</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>E88FD104-08FE-0B53-3095-84968D0AD37C</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>EBE00AEF-E1B0-475C-3A80-3F80ADE5DB16</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

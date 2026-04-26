@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="a beneficiary has an ethnicity " directorySegmentName="seg_0" id="315E1597-2464-53AA-CEDE-50FC4BA843BA">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 22:50:29 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<sourcePk>BA0345C5-B238-0FC8-C998-EDCE575C9471</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>true</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>CAAB12B3-C9F1-0D42-FF63-4519BDCEBDC0</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>E88FD104-08FE-0B53-3095-84968D0AD37C</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

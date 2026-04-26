@@ -1,0 +1,170 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="01AB519D-7B5E-5675-757E-7988C08144AB" name="Appointment">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 20:54:15 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="BBDDA389-926C-52D5-FDDA-65B6DB0B9FD5">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 20:54:42 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="date" id="2AFAC8E6-CF3E-D172-E928-D61D792022EC">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 20:55:19 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id1" id="9937AACF-FF1B-099A-F6A4-6865DD43B6F4">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 21:00:13 UTC</createdTime>
+<generatorID>8257F511-F959-31BE-CEA5-1AA01F440AA1</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<referedAttribute>7EC7A15B-79F7-7862-F09E-081CE80AA43A</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>10</dataTypeScale>
+<ownDataTypeParameters>,,10</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id2" id="9D577D8B-2F8D-C299-12EB-2C237981132E">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 21:05:46 UTC</createdTime>
+<generatorID>D2F121B9-ED2E-85B6-DD1E-4495AFF94A29</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<referedAttribute>7EC7A15B-79F7-7862-F09E-081CE80AA43A</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>10</dataTypeScale>
+<ownDataTypeParameters>,,10</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id3" id="864191C9-79B1-D610-6AED-770B72FFD7A1">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 22:58:48 UTC</createdTime>
+<generatorID>E178FEAF-27EE-F729-E4B3-520AED9D0F13</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<referedAttribute>880F939B-B8B2-7E91-522A-FE94042DFDB2</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeScale>1</dataTypeScale>
+<ownDataTypeParameters>,,1</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id4" id="26876220-D782-32DF-BB63-9FEAF4BE0B51">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 22:59:03 UTC</createdTime>
+<generatorID>3E1AD593-1307-EACE-1F28-BB9D33821E4D</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<referedAttribute>92C73EF7-AC9C-9868-FC91-756BED944186</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeScale>1</dataTypeScale>
+<ownDataTypeParameters>,,1</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id5" id="EF51094D-4D85-E2FE-379C-49C7A4D7716D">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 22:59:43 UTC</createdTime>
+<generatorID>D2151FE7-619B-63DB-3C75-7774CE8E9C85</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<referedAttribute>F2BA3110-FD9A-57ED-C7D0-168E5A6BE32E</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<dataTypeScale>1</dataTypeScale>
+<ownDataTypeParameters>,,1</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id6" id="E3F20345-8EA1-AC35-7F99-B6EC630C4EC0">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 22:59:50 UTC</createdTime>
+<generatorID>EE6DB4B0-94F7-50F0-33FD-7397859CE6D3</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<referedAttribute>0091A7BA-22F8-BCB0-45C5-DED0E0D271D2</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<dataTypeScale>1</dataTypeScale>
+<ownDataTypeParameters>,,1</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id7" id="BC93BC34-B806-1679-C6DA-96964AFFC68A">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-10 23:40:52 UTC</createdTime>
+<generatorID>C2B70101-8135-2F9B-AF69-BF6FECD8F59D</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>5DDDD57A-D120-A162-BC3A-B7C0461867E0</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<dataTypeScale>20</dataTypeScale>
+<ownDataTypeParameters>,,20</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="BA488774-C5FC-F366-097F-BBE54D0DFD4B" name="Appointment PK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 20:59:50 UTC</createdTime>
+<ownerDesignName>MER</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="341300A7-3A9A-5A5B-E185-CF8927AB716E" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>BBDDA389-926C-52D5-FDDA-65B6DB0B9FD5</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

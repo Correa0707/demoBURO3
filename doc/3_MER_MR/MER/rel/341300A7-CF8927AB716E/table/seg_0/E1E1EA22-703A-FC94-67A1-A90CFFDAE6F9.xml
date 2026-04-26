@@ -1,0 +1,245 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="E1E1EA22-703A-FC94-67A1-A90CFFDAE6F9" name="APPOINTMENTS">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>01AB519D-7B5E-5675-757E-7988C08144AB</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<ordsAlias>appointment</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="02A8BB07-EAEA-7292-3E8D-D4C63CCB0CF0">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>BBDDA389-926C-52D5-FDDA-65B6DB0B9FD5</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="date" id="7FF7B02F-2363-23AB-3898-6CFE7F24BE1A">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>2AFAC8E6-CF3E-D172-E928-D61D792022EC</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BENEFICIARY_id" id="3FCC90A5-DA05-6FCE-4A18-23AFFC36621D">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>9937AACF-FF1B-099A-F6A4-6865DD43B6F4</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>10</dataTypeScale>
+<ownDataTypeParameters>,,10</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A4012167-1F94-561E-DFC6-430B1360D868" referredColumn="380910D1-10FD-284B-4067-FDC6D8561C97"/>
+</associations>
+</Column>
+<Column name="STUDENTS_id" id="47AFAFD3-D969-F4C7-3EB2-90C25546A994">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>9D577D8B-2F8D-C299-12EB-2C237981132E</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>10</dataTypeScale>
+<ownDataTypeParameters>,,10</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="BED22F22-003B-472E-BF48-63A44B6B9C9D" referredColumn="3F1E4AA2-0A9F-ECC0-554B-DAC8A31EA57A"/>
+</associations>
+</Column>
+<Column name="MODES_APPOINTMENT_id" id="6F44C880-D78B-E07B-BF59-76D00DAD799E">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>864191C9-79B1-D610-6AED-770B72FFD7A1</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeScale>1</dataTypeScale>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6E1FA395-8D2B-07D7-B0F2-E7D30FC1D2FC" referredColumn="F00AB7A0-D4C5-5834-4C16-AAB4EAC85B85"/>
+</associations>
+</Column>
+<Column name="HOURS_id" id="8615A70E-E2B6-C742-9F7E-A89F2AD200C7">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>26876220-D782-32DF-BB63-9FEAF4BE0B51</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypeScale>1</dataTypeScale>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6EF1B315-434B-5EDE-48AD-F8ADFD5DC8F0" referredColumn="FCCC1977-2970-71D0-853F-E02E528B8E2D"/>
+</associations>
+</Column>
+<Column name="STATES_APPOINTMENT_id" id="221498CF-9B8F-EDE6-9047-A3367E2D796C">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>EF51094D-4D85-E2FE-379C-49C7A4D7716D</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<dataTypeScale>1</dataTypeScale>
+<ownDataTypeParameters>,,1</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E3713A87-6CE8-EFE8-9498-8412CAEAA403" referredColumn="3AB4DB99-D751-64F0-AD69-6FBCC0527DE2"/>
+</associations>
+</Column>
+<Column name="TYPES_APPOINTMENT_id" id="E6F82672-A06D-923C-65D5-196C226E0FCF">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>E3F20345-8EA1-AC35-7F99-B6EC630C4EC0</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<dataTypeScale>1</dataTypeScale>
+<ownDataTypeParameters>,,1</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="8527E551-140F-604F-AEA1-F322D64434DA" referredColumn="AE0A706C-1F5D-884C-4645-3A0E0150420D"/>
+</associations>
+</Column>
+<Column name="CASES_id" id="B7B88A74-AFB8-D45E-5193-0AB4FAF6B599">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-10 23:42:49 UTC</createdTime>
+<generatorID>BC93BC34-B806-1679-C6DA-96964AFFC68A</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<dataTypeScale>20</dataTypeScale>
+<ownDataTypeParameters>,,20</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="5D75C2CC-E199-FDCD-3AE2-004C4C85B7CA" referredColumn="A8573DEF-3DB8-053B-0751-6D4DD0D96497"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="4D95236D-83CB-0402-3DBB-3938C5E1D72F" name="APPOINTMENTS_PK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>BA488774-C5FC-F366-097F-BBE54D0DFD4B</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="02A8BB07-EAEA-7292-3E8D-D4C63CCB0CF0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="47CAB025-1336-A627-B3B0-99BE32E7D93D" name="APPOINTMENTS_MODES_APPOINTMENT_FK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>E178FEAF-27EE-F729-E4B3-520AED9D0F13</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6F44C880-D78B-E07B-BF59-76D00DAD799E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C2056423-49A8-8A60-02CC-49E1E9BF6BE3" name="APPOINTMENTS_HOURS_FK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>3E1AD593-1307-EACE-1F28-BB9D33821E4D</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8615A70E-E2B6-C742-9F7E-A89F2AD200C7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F89C1955-AA72-1965-56F3-44BC13A094A2" name="APPOINTMENTS_STATES_APPOINTMENT_FK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>D2151FE7-619B-63DB-3C75-7774CE8E9C85</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="221498CF-9B8F-EDE6-9047-A3367E2D796C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="1640228F-0F19-1E3A-FBD5-E789609735D7" name="APPOINTMENTS_TYPES_APPOINTMENT_FK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>EE6DB4B0-94F7-50F0-33FD-7397859CE6D3</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E6F82672-A06D-923C-65D5-196C226E0FCF"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C06146FA-CD32-A869-86A6-9DA39A9D38F9" name="APPOINTMENTS_BENEFICIARY_FK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>8257F511-F959-31BE-CEA5-1AA01F440AA1</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3FCC90A5-DA05-6FCE-4A18-23AFFC36621D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="956FA6A1-6C31-8DE0-37D1-BC998BB00B4E" name="APPOINTMENTS_STUDENTS_FK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>D2F121B9-ED2E-85B6-DD1E-4495AFF94A29</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="47AFAFD3-D969-F4C7-3EB2-90C25546A994"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="07695AEE-4C5C-B215-4348-060F31C44B0C" name="APPOINTMENTS_CASES_FK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-10 23:42:49 UTC</createdTime>
+<generatorID>C2B70101-8135-2F9B-AF69-BF6FECD8F59D</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B7B88A74-AFB8-D45E-5193-0AB4FAF6B599"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

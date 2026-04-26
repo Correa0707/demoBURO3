@@ -1,0 +1,80 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="EF25211F-504F-8E83-E1C6-A67C6B186F2F" name="STUDENTS">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>34E7451C-3268-364A-624D-6FB43CA984C6</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<ordsAlias>student</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="3F1E4AA2-0A9F-ECC0-554B-DAC8A31EA57A">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>7EC7A15B-79F7-7862-F09E-081CE80AA43A</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="93409C0B-1070-6C3E-1F05-3A529A5A945E" referredColumn="2D8CC330-BAA7-1095-EFCE-FD745EEA9AB0"/>
+</associations>
+</Column>
+<Column name="Schedule_id" id="C8CB6678-E828-B30A-3226-713C604A5B87">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-15 21:37:59 UTC</createdTime>
+<generatorID>51B5BCE5-2539-08FD-564C-B292D41F794C</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="B7C3B15F-9FC1-DC34-5441-D8C1CAAA4462" referredColumn="345F3B10-A61E-4861-680E-56C843A03F60"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="3E3759A0-3CD6-FE5D-F885-1D03246A7506" name="Student_PK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>55E0C964-E028-6AEC-4888-F4CD17141F74</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3F1E4AA2-0A9F-ECC0-554B-DAC8A31EA57A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9E937E12-396C-B2EF-1A46-3BDF24DD4504" name="Student_User_FK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-09 23:07:40 UTC</createdTime>
+<generatorID>2F8018BA-314E-6A86-D39D-370D782774BC</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3F1E4AA2-0A9F-ECC0-554B-DAC8A31EA57A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D3D7C2C1-C29C-8BC1-62CB-94034B703106" name="Student_Schedule_FK">
+<createdBy>belit</createdBy>
+<createdTime>2026-03-15 21:37:59 UTC</createdTime>
+<generatorID>3E6FA0E1-D0E0-CD79-F307-F05374D02FAB</generatorID>
+<ownerDesignName>MER</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C8CB6678-E828-B30A-3226-713C604A5B87"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
