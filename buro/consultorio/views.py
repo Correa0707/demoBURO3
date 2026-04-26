@@ -103,6 +103,29 @@ def _is_student_route(request):
     return bool(url_name and url_name.startswith('student-'))
 
 
+def auto_assign_student(appointment):
+    """
+    Intenta asignar automáticamente un estudiante disponible a la cita recibida.
+    Retorna el Student asignado si lo encontró, o None si no había disponibles.
+    No llama a appointment.save() — el llamador es responsable de guardar.
+    """
+    candidates = Student.objects.filter(available=True).select_related('user')
+    for student in candidates:
+        occupied = Appointment.objects.filter(
+            student_assigned=student,
+            date__date=appointment.date.date(),
+            hour=appointment.hour,
+            status__in=[
+                AppointmentStatus.PENDING,
+                AppointmentStatus.CONFIRMED,
+                AppointmentStatus.REASSIGNED,
+            ]
+        ).exclude(pk=appointment.pk).exists()
+        if not occupied:
+            return student
+    return None
+
+
 # ==================== AUTH VIEWS ====================
 
 class LoginView(View):
@@ -434,6 +457,23 @@ class AppointmentCreateView(LoginRequiredMixin, CreateView):
     
     def form_valid(self, form):
         self.object = form.save()
+
+        # === AUTO-ASIGNACIÓN ===
+        student = auto_assign_student(self.object)
+        if student:
+            self.object.student_assigned = student
+            self.object.status = AppointmentStatus.CONFIRMED
+            self.object.save(update_fields=['student_assigned', 'status', 'updated_at'])
+            Notification.objects.create(
+                user=student.user,
+                event_type=EventType.APPOINTMENT_REASSIGNED,
+                title='Nueva cita asignada',
+                message=f'Se te ha asignado automáticamente una cita para el '
+                        f'{timezone.localtime(self.object.date).strftime("%d/%m/%Y")} '
+                        f'{self.object.hour}'
+            )
+        # Si no hay estudiante disponible, la cita queda en PENDING (comportamiento por defecto del modelo)
+        # === FIN AUTO-ASIGNACIÓN ===
 
         Notification.objects.create(
             beneficiary=self.object.beneficiary,
@@ -1105,6 +1145,23 @@ class PublicAppointmentView(View):
                     reason_type=ReasonType.FIRST_TIME,
                     status=AppointmentStatus.PENDING,
                 )
+
+                # === AUTO-ASIGNACIÓN ===
+                student = auto_assign_student(appointment)
+                if student:
+                    appointment.student_assigned = student
+                    appointment.status = AppointmentStatus.CONFIRMED
+                    appointment.save(update_fields=['student_assigned', 'status', 'updated_at'])
+                    Notification.objects.create(
+                        user=student.user,
+                        event_type=EventType.APPOINTMENT_REASSIGNED,
+                        title='Nueva cita asignada',
+                        message=f'Se te ha asignado automáticamente una cita para el '
+                                f'{timezone.localtime(appointment.date).strftime("%d/%m/%Y")} '
+                                f'{appointment.hour}'
+                    )
+                # Si no hay disponible, queda PENDING para que un asesor asigne manualmente
+                # === FIN AUTO-ASIGNACIÓN ===
 
                 send_appointment_email(appointment)
                 messages.success(request, 'La cita ha sido agendada exitosamente.')
