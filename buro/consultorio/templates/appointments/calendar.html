@@ -119,6 +119,18 @@
                                     {% endif %}" title="{{ appt.beneficiary.name }}">
                                     {{ appt.date|time:"H:i" }} {{ appt.beneficiary.name|truncatewords:2 }}
                                 </a>
+
+                                {% if can_reassign %}
+                                  {% if appt.status == 'PENDING' or appt.status == 'CONFIRMED' or appt.status == 'REASSIGNED' %}
+                                    <form method="post" action="{% url 'appointment-reassign-auto' appt.pk %}">
+                                      {% csrf_token %}
+                                      <button type="submit"
+                                        class="mt-0.5 w-full text-xs px-1 py-0.5 border border-indigo-500 text-indigo-600 rounded hover:bg-indigo-50 transition-colors">
+                                        Reasignar
+                                      </button>
+                                    </form>
+                                  {% endif %}
+                                {% endif %}
                                 {% endfor %}
                             </div>
                         {% endif %}

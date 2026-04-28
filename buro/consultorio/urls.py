@@ -20,7 +20,7 @@ from .views import (
     # Appointments
     AppointmentListView, AppointmentCreateView, AppointmentDetailView, 
     AppointmentEditView, AppointmentCancelView, AppointmentAttendanceView,
-    AppointmentReassignView, AppointmentAssignStudentView, AppointmentRescheduleView, AppointmentCalendarView, PublicAppointmentView,AppointmentUnassignedView,
+    AppointmentReassignView, AppointmentAssignStudentView, AppointmentRescheduleView, AppointmentCalendarView, PublicAppointmentView, AppointmentUnassignedView, AppointmentAutoReassignView,
     # Cases
     CaseListView, CaseCreateView, CaseDetailView, CaseEditView,
     CaseAddHistoryView, CaseReassignView, CaseCloseView,
@@ -107,6 +107,7 @@ urlpatterns = [
     path('citas/<uuid:pk>/cancelar/', AppointmentCancelView.as_view(), name='appointment-cancel'),
     path('citas/<uuid:pk>/asistencia/', AppointmentAttendanceView.as_view(), name='appointment-attendance'),
     path('citas/<uuid:pk>/reasignar/', AppointmentReassignView.as_view(), name='appointment-reassign'),
+    path('citas/<uuid:pk>/reasignar-automatico/', AppointmentAutoReassignView.as_view(), name='appointment-reassign-auto'),
     path('citas/<uuid:pk>/asignar-estudiante/', AppointmentAssignStudentView.as_view(), name='appointment-assign-student'),
     path('citas/<uuid:pk>/reprogramar/', AppointmentRescheduleView.as_view(), name='appointment-reschedule'),
     
