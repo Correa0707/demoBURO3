@@ -25,7 +25,7 @@ from .models import (
 from .forms import (
     BeneficiaryForm, BeneficiaryEditForm, BeneficiaryProfileForm, BeneficiaryPasswordForm,
     AppointmentForm, AppointmentEditForm, AppointmentCancelForm, AttendanceForm, AppointmentRescheduleForm,
-    CaseForm, CaseEditForm, CaseHistoryForm, ReassignCaseForm,
+    CaseForm, CaseEditForm, CaseHistoryForm, ReassignCaseForm, CreateCaseFromAppointmentForm,
     CommunicationForm, SendEmailForm,
     LegalRoomForm, ReportFilterForm, CaseReportFilterForm,
     SystemUserCreationForm, StudentForm, PublicAppointmentForm,
@@ -101,6 +101,29 @@ def _is_student_route(request):
     match = getattr(request, 'resolver_match', None)
     url_name = match.url_name if match else ''
     return bool(url_name and url_name.startswith('student-'))
+
+
+def auto_assign_student(appointment):
+    """
+    Intenta asignar automáticamente un estudiante disponible a la cita recibida.
+    Retorna el Student asignado si lo encontró, o None si no había disponibles.
+    No llama a appointment.save() — el llamador es responsable de guardar.
+    """
+    candidates = Student.objects.filter(available=True).select_related('user')
+    for student in candidates:
+        occupied = Appointment.objects.filter(
+            student_assigned=student,
+            date__date=appointment.date.date(),
+            hour=appointment.hour,
+            status__in=[
+                AppointmentStatus.PENDING,
+                AppointmentStatus.CONFIRMED,
+                AppointmentStatus.REASSIGNED,
+            ]
+        ).exclude(pk=appointment.pk).exists()
+        if not occupied:
+            return student
+    return None
 
 
 # ==================== AUTH VIEWS ====================
@@ -434,6 +457,23 @@ class AppointmentCreateView(LoginRequiredMixin, CreateView):
     
     def form_valid(self, form):
         self.object = form.save()
+
+         # === AUTO-ASIGNACIÓN ===
+        student = auto_assign_student(self.object)
+        if student:
+            self.object.student_assigned = student
+            self.object.status = AppointmentStatus.CONFIRMED
+            self.object.save(update_fields=['student_assigned', 'status', 'updated_at'])
+            Notification.objects.create(
+                user=student.user,
+                event_type=EventType.APPOINTMENT_REASSIGNED,
+                title='Nueva cita asignada',
+                message=f'Se te ha asignado automáticamente una cita para el '
+                        f'{timezone.localtime(self.object.date).strftime("%d/%m/%Y")} '
+                        f'{self.object.hour}'
+            )
+        # Si no hay estudiante disponible, la cita queda en PENDING (comportamiento por defecto del modelo)
+        # === FIN AUTO-ASIGNACIÓN === 
 
         Notification.objects.create(
             beneficiary=self.object.beneficiary,
@@ -1106,6 +1146,23 @@ class PublicAppointmentView(View):
                     status=AppointmentStatus.PENDING,
                 )
 
+                 # === AUTO-ASIGNACIÓN ===
+                student = auto_assign_student(appointment)
+                if student:
+                    appointment.student_assigned = student
+                    appointment.status = AppointmentStatus.CONFIRMED
+                    appointment.save(update_fields=['student_assigned', 'status', 'updated_at'])
+                    Notification.objects.create(
+                        user=student.user,
+                        event_type=EventType.APPOINTMENT_REASSIGNED,
+                        title='Nueva cita asignada',
+                        message=f'Se te ha asignado automáticamente una cita para el '
+                                f'{timezone.localtime(appointment.date).strftime("%d/%m/%Y")} '
+                                f'{appointment.hour}'
+                    )
+                # Si no hay disponible, queda PENDING para que un asesor asigne manualmente
+                # === FIN AUTO-ASIGNACIÓN ===
+
                 send_appointment_email(appointment)
                 messages.success(request, 'La cita ha sido agendada exitosamente.')
                 return redirect('beneficiary-home')
@@ -1654,6 +1711,147 @@ class StudentAppointmentAvailabilityView(LoginRequiredMixin, View):
         return redirect('student-home')
 
 
+class StudentCreateCaseView(LoginRequiredMixin, View):
+    """Vista para crear un caso desde una cita (estudiante)"""
+    template_name = 'student/create_case.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not is_student_user(request.user):
+            messages.error(request, 'No tienes permisos para esta accion.')
+            return redirect('home')
+        return super().dispatch(request, *args, **kwargs)
+
+    def _get_student_with_least_cases(self, exclude_student_id):
+        """Retorna el estudiante disponible con menos casos activos (diferente al que atiende la cita)"""
+        active_statuses = [CaseStatus.ASSIGNED, CaseStatus.IN_PROCESS]
+        
+        students = Student.objects.filter(
+            available=True
+        ).exclude(
+            id=exclude_student_id
+        ).annotate(
+            active_cases_count=Count(
+                'assigned_cases',
+                filter=Q(assigned_cases__status__in=active_statuses)
+            )
+        ).order_by('active_cases_count')
+        
+        if students.exists():
+            return students.first()
+        return None
+
+    def get(self, request, pk):
+        student_profile = getattr(request.user, 'student_profile', None)
+        if not student_profile:
+            messages.error(request, 'No se encontro el perfil del estudiante.')
+            return redirect('student-home')
+
+        appointment = get_object_or_404(
+            Appointment.objects.select_related('beneficiary', 'student_assigned__user'),
+            pk=pk,
+            student_assigned=student_profile
+        )
+
+        # Verificar que no exista ya un caso para esta cita
+        if Case.objects.filter(appointment_origin=appointment).exists():
+            messages.warning(request, 'Ya existe un caso creado para esta cita.')
+            return redirect('student-home')
+
+        form = CreateCaseFromAppointmentForm()
+
+        return render(request, self.template_name, {
+            'form': form,
+            'appointment': appointment,
+            'beneficiary': appointment.beneficiary,
+        })
+
+    def post(self, request, pk):
+        student_profile = getattr(request.user, 'student_profile', None)
+        if not student_profile:
+            messages.error(request, 'No se encontro el perfil del estudiante.')
+            return redirect('student-home')
+
+        appointment = get_object_or_404(
+            Appointment.objects.select_related('beneficiary', 'student_assigned__user'),
+            pk=pk,
+            student_assigned=student_profile
+        )
+
+        # Verificar que no exista ya un caso para esta cita
+        if Case.objects.filter(appointment_origin=appointment).exists():
+            messages.warning(request, 'Ya existe un caso creado para esta cita.')
+            return redirect('student-home')
+
+        form = CreateCaseFromAppointmentForm(request.POST)
+
+        if form.is_valid():
+            # Obtener el estudiante con menos casos activos (diferente al que atiende la cita)
+            assigned_student = self._get_student_with_least_cases(student_profile.id)
+
+            if not assigned_student:
+                messages.error(request, 'No hay estudiantes disponibles para asignar el caso.')
+                return render(request, self.template_name, {
+                    'form': form,
+                    'appointment': appointment,
+                    'beneficiary': appointment.beneficiary,
+                })
+
+            # Determinar si el titular es el beneficiario
+            titular_is_beneficiary = form.cleaned_data['titular_is_beneficiary'] == 'yes'
+
+            # Crear el caso
+            case = Case.objects.create(
+                title=form.cleaned_data['title'],
+                description=form.cleaned_data['description'],
+                beneficiary=appointment.beneficiary,
+                student_assigned=assigned_student,
+                appointment_origin=appointment,
+                titular_is_beneficiary=titular_is_beneficiary,
+                titular_cedula=form.cleaned_data.get('titular_cedula') if not titular_is_beneficiary else None,
+                titular_nombre=form.cleaned_data.get('titular_nombre') if not titular_is_beneficiary else None,
+                titular_telefono=form.cleaned_data.get('titular_telefono') if not titular_is_beneficiary else None,
+                titular_correo=form.cleaned_data.get('titular_correo') if not titular_is_beneficiary else None,
+                sexo=form.cleaned_data['sexo'],
+                poblacion=form.cleaned_data['poblacion'],
+                etnia=form.cleaned_data['etnia'],
+                estrato=form.cleaned_data['estrato'],
+                discapacidad=form.cleaned_data['discapacidad'],
+                status=CaseStatus.IN_PROCESS,
+            )
+
+            # Asociar el caso a la cita
+            appointment.case = case
+            appointment.save(update_fields=['case', 'updated_at'])
+
+            # Registrar en historial del caso
+            CaseHistory.objects.create(
+                case=case,
+                action='Caso creado desde cita',
+                observation=f'Caso creado por {request.user.get_full_name()} desde la cita del {appointment.date.strftime("%d/%m/%Y")}',
+                responsible=student_profile
+            )
+
+            # Notificar al estudiante asignado
+            Notification.objects.create(
+                user=assigned_student.user,
+                event_type=EventType.CASE_ASSIGNED,
+                title='Nuevo caso asignado',
+                message=f'Se te ha asignado el caso "{case.title}" (ID: {str(case.id)[:8]})'
+            )
+
+            messages.success(
+                request, 
+                f'Caso creado exitosamente y asignado a {assigned_student.user.get_full_name()}.'
+            )
+            return redirect('student-home')
+
+        return render(request, self.template_name, {
+            'form': form,
+            'appointment': appointment,
+            'beneficiary': appointment.beneficiary,
+        })
+
+
 # ==================== BENEFICIARY HOME VIEW (NEW) ====================
 
 class BeneficiaryHomeView(View):
@@ -1736,7 +1934,60 @@ class BeneficiaryAppointmentDetailView(View):
             'beneficiary': beneficiary,
             'appointment': appointment,
         })
+    
+class BeneficiaryCasesView(View):
+    """Vista para listar los casos del beneficiario loggeado"""
+    template_name = 'beneficiary/cases.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.session.get('beneficiary_id'):
+            return redirect('unified-login')
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        beneficiary_id = request.session.get('beneficiary_id')
+
+        try:
+            beneficiary = Beneficiary.objects.get(id=beneficiary_id)
+        except Beneficiary.DoesNotExist:
+            return redirect('unified-login')
+
+        # Consultar casos del beneficiario
+        cases = beneficiary.cases.select_related(
+            'student_assigned__user'
+        ).order_by('-creation_date')
+
+        return render(request, self.template_name, {
+            'beneficiary': beneficiary,
+            'cases': cases,
+            'total_cases': cases.count()
+        })
+    
+class BeneficiaryCasesDetailView(View):
+    """Vista para ver el detalle de un caso del beneficiario"""
+    template_name = 'beneficiary/case_detail.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.session.get('beneficiary_id'):
+            return redirect('unified-login')
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, case_id):
+        beneficiary_id = request.session.get('beneficiary_id')
+
+        beneficiary = get_object_or_404(Beneficiary, id=beneficiary_id)
+
+        # 🔥 IMPORTANTE: solo permitir ver sus propios casos
+        case = get_object_or_404(
+            Case.objects.select_related('student_assigned__user'),
+            id=case_id,
+            beneficiary=beneficiary
+        )
+
+        return render(request, self.template_name, {
+            'case': case,
+            'beneficiary': beneficiary
+        })
 
 class BeneficiaryProfileView(View):
     """Vista de perfil/configuracion para beneficiarios (nueva, con sidebar vacia)"""
@@ -2290,3 +2541,213 @@ class AdminCreateStudentView(AdminRequiredMixin, View):
             })
         
         return render(request, self.template_name, {'form': form})
+
+
+# ==================== STUDENT CASE VIEWS ====================
+
+class StudentCaseListView(LoginRequiredMixin, ListView):
+    """Lista de casos asignados al estudiante"""
+    model = Case
+    template_name = 'student/case_list.html'
+    context_object_name = 'cases'
+    paginate_by = 10
+
+    def dispatch(self, request, *args, **kwargs):
+        if not is_student_user(request.user):
+            messages.error(request, 'No tienes permisos para acceder a esta seccion.')
+            return redirect('home')
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        student_profile = getattr(self.request.user, 'student_profile', None)
+        if not student_profile:
+            return Case.objects.none()
+        
+        queryset = Case.objects.filter(
+            student_assigned=student_profile
+        ).select_related('beneficiary', 'legal_room').order_by('-creation_date')
+        
+        # Filtros
+        status = self.request.GET.get('status')
+        search = self.request.GET.get('search')
+        
+        if status:
+            queryset = queryset.filter(status=status)
+        if search:
+            queryset = queryset.filter(
+                Q(title__icontains=search) |
+                Q(beneficiary__name__icontains=search) |
+                Q(description__icontains=search)
+            )
+        
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['statuses'] = CaseStatus.choices
+        context['current_status'] = self.request.GET.get('status', '')
+        context['search'] = self.request.GET.get('search', '')
+        return context
+
+
+class StudentCaseDetailView(LoginRequiredMixin, View):
+    """Detalle de un caso asignado al estudiante"""
+    template_name = 'student/case_detail.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not is_student_user(request.user):
+            messages.error(request, 'No tienes permisos para acceder a esta seccion.')
+            return redirect('home')
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, pk):
+        from .forms import StudentCaseStatusForm, StudentScheduleFollowUpForm
+        
+        student_profile = getattr(request.user, 'student_profile', None)
+        if not student_profile:
+            messages.error(request, 'No se encontro el perfil del estudiante.')
+            return redirect('student-home')
+
+        case = get_object_or_404(
+            Case.objects.select_related('beneficiary', 'student_assigned__user', 'legal_room', 'appointment_origin'),
+            pk=pk,
+            student_assigned=student_profile
+        )
+
+        # Obtener historial y citas asociadas
+        history = case.history.all().order_by('-date')
+        appointments = case.appointments.select_related('student_assigned__user').order_by('-date')
+
+        status_form = StudentCaseStatusForm(initial={'status': case.status})
+        followup_form = StudentScheduleFollowUpForm()
+
+        return render(request, self.template_name, {
+            'case': case,
+            'history': history,
+            'appointments': appointments,
+            'status_form': status_form,
+            'followup_form': followup_form,
+        })
+
+
+class StudentCaseUpdateStatusView(LoginRequiredMixin, View):
+    """Vista para que el estudiante cambie el estado de un caso"""
+
+    def dispatch(self, request, *args, **kwargs):
+        if not is_student_user(request.user):
+            messages.error(request, 'No tienes permisos para esta accion.')
+            return redirect('home')
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, pk):
+        from .forms import StudentCaseStatusForm
+        
+        student_profile = getattr(request.user, 'student_profile', None)
+        if not student_profile:
+            messages.error(request, 'No se encontro el perfil del estudiante.')
+            return redirect('student-home')
+
+        case = get_object_or_404(Case, pk=pk, student_assigned=student_profile)
+        form = StudentCaseStatusForm(request.POST)
+
+        if form.is_valid():
+            old_status = case.get_status_display()
+            new_status = form.cleaned_data['status']
+            observation = form.cleaned_data.get('observation', '')
+
+            case.status = new_status
+            case.save(update_fields=['status'])
+
+            # Registrar en historial
+            CaseHistory.objects.create(
+                case=case,
+                action=f'Estado cambiado de "{old_status}" a "{case.get_status_display()}"',
+                observation=observation,
+                responsible=student_profile
+            )
+
+            # Notificar al beneficiario si el caso se cierra
+            if new_status in [CaseStatus.COMPLETED, CaseStatus.CLOSE_FOR_ABSENCE]:
+                Notification.objects.create(
+                    beneficiary=case.beneficiary,
+                    event_type=EventType.CASE_CLOSED,
+                    title='Caso actualizado',
+                    message=f'El caso "{case.title or str(case.id)[:8]}" ha sido {case.get_status_display().lower()}'
+                )
+
+            messages.success(request, 'Estado del caso actualizado exitosamente.')
+        else:
+            messages.error(request, 'Error al actualizar el estado del caso.')
+
+        return redirect('student-case-detail', pk=pk)
+
+
+class StudentCaseScheduleFollowUpView(LoginRequiredMixin, View):
+    """Vista para que el estudiante agende una cita de seguimiento desde un caso"""
+
+    def dispatch(self, request, *args, **kwargs):
+        if not is_student_user(request.user):
+            messages.error(request, 'No tienes permisos para esta accion.')
+            return redirect('home')
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, pk):
+        from .forms import StudentScheduleFollowUpForm
+        
+        student_profile = getattr(request.user, 'student_profile', None)
+        if not student_profile:
+            messages.error(request, 'No se encontro el perfil del estudiante.')
+            return redirect('student-home')
+
+        case = get_object_or_404(Case, pk=pk, student_assigned=student_profile)
+        form = StudentScheduleFollowUpForm(request.POST)
+
+        if form.is_valid():
+            selected_date = form.cleaned_data['date']
+            appointment_type = form.cleaned_data['type']
+
+            # La hora siempre sera a las 4:00 PM (16:00)
+            fixed_hour = '16:00'
+            appointment_datetime = timezone.make_aware(
+                datetime.strptime(f"{selected_date} {fixed_hour}", "%Y-%m-%d %H:%M")
+            )
+
+            # Crear la cita asociada al caso
+            appointment = Appointment.objects.create(
+                beneficiary=case.beneficiary,
+                student_assigned=student_profile,
+                case=case,
+                date=appointment_datetime,
+                hour=fixed_hour,
+                type=appointment_type,
+                status=AppointmentStatus.CONFIRMED,
+                reason_type=ReasonType.CASE_FOLLOW_UP,
+            )
+
+            # Registrar en historial del caso
+            CaseHistory.objects.create(
+                case=case,
+                action='Cita de seguimiento agendada',
+                observation=f'Cita programada para el {selected_date.strftime("%d/%m/%Y")} a las 4:00 PM',
+                responsible=student_profile
+            )
+
+            # Notificar al beneficiario
+            Notification.objects.create(
+                beneficiary=case.beneficiary,
+                event_type=EventType.APPOINTMENT_SCHEDULED,
+                title='Nueva cita de seguimiento',
+                message=f'Se ha agendado una cita de seguimiento para el {selected_date.strftime("%d/%m/%Y")} a las 4:00 PM'
+            )
+
+            # Enviar correo al beneficiario
+            send_appointment_email(appointment)
+
+            messages.success(
+                request, 
+                f'Cita de seguimiento agendada para el {selected_date.strftime("%d/%m/%Y")} a las 4:00 PM. Se ha enviado un correo al beneficiario.'
+            )
+        else:
+            messages.error(request, 'Error al agendar la cita. Verifica los datos ingresados.')
+
+        return redirect('student-case-detail', pk=pk)

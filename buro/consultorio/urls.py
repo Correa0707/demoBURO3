@@ -8,10 +8,13 @@ from .views import (
     # Profile
     ProfileView, ProfilePasswordView,
     # Student Home
-    StudentHomeView, StudentAppointmentAvailabilityView,
+    StudentHomeView, StudentAppointmentAvailabilityView, StudentCreateCaseView,
+    # Student Cases
+    StudentCaseListView, StudentCaseDetailView, StudentCaseUpdateStatusView, StudentCaseScheduleFollowUpView,
     # Beneficiary Home (new)
     BeneficiaryHomeView, BeneficiaryAppointmentDetailView, BeneficiaryProfileView, BeneficiaryProfileUpdateView,
-    BeneficiaryProfilePasswordView, BeneficiaryLogoutView, BeneficiaryNotificationsView, BeneficiaryNotificationMarkReadView,
+    BeneficiaryProfilePasswordView, BeneficiaryLogoutView, BeneficiaryNotificationsView, BeneficiaryNotificationMarkReadView, BeneficiaryCasesView,
+    BeneficiaryCasesDetailView,
     # Beneficiaries
     BeneficiaryListView, BeneficiaryCreateView, BeneficiaryDetailView, BeneficiaryEditView, BeneficiaryAppointmentSearchView, BeneficiaryAppointmentCancelView, BeneficiaryAppointmentRescheduleView,
     # Appointments
@@ -56,6 +59,7 @@ urlpatterns = [
 
     # Student shared modules (DRY: reusan vistas existentes)
     path('student/citas/<uuid:pk>/disponibilidad/', StudentAppointmentAvailabilityView.as_view(), name='student-appointment-availability'),
+    path('student/citas/<uuid:pk>/crear-caso/', StudentCreateCaseView.as_view(), name='student-create-case'),
     path('student/appointments/', AppointmentListView.as_view(), name='student-appointment-list'),
     path('student/email/', SendEmailView.as_view(), name='student-send-email'),
     path('student/notifications/', NotificationListView.as_view(), name='student-notification-list'),
@@ -63,6 +67,12 @@ urlpatterns = [
     path('student/notifications/leer-todas/', NotificationMarkAllReadView.as_view(), name='student-notification-mark-all-read'),
     path('student/settings/profile/', ProfileView.as_view(), name='student-profile-settings'),
     path('student/settings/profile/password/', ProfilePasswordView.as_view(), name='student-profile-password'),
+    
+    # Student Cases
+    path('student/casos/', StudentCaseListView.as_view(), name='student-case-list'),
+    path('student/casos/<uuid:pk>/', StudentCaseDetailView.as_view(), name='student-case-detail'),
+    path('student/casos/<uuid:pk>/cambiar-estado/', StudentCaseUpdateStatusView.as_view(), name='student-case-update-status'),
+    path('student/casos/<uuid:pk>/agendar-cita/', StudentCaseScheduleFollowUpView.as_view(), name='student-case-schedule-followup'),
     
     # Beneficiary Home (new - independent from portal)
     path('beneficiario/', BeneficiaryHomeView.as_view(), name='beneficiary-home'),
@@ -73,6 +83,8 @@ urlpatterns = [
     path('beneficiario/logout/', BeneficiaryLogoutView.as_view(), name='beneficiary-logout'),
     path('beneficiario/notificaciones/', BeneficiaryNotificationsView.as_view(), name='beneficiary-notifications'),
     path('beneficiario/notificaciones/<uuid:pk>/leer/', BeneficiaryNotificationMarkReadView.as_view(), name='beneficiary-notification-mark-read'),
+    path('beneficiario/casos/', BeneficiaryCasesView.as_view(), name='beneficiary-cases'),
+    path('beneficiario/casos/<uuid:case_id>/ver', BeneficiaryCasesDetailView.as_view(), name='beneficiary-case-detail'),
     
     # Beneficiaries
     path('beneficiarios/', BeneficiaryListView.as_view(), name='beneficiary-list'),

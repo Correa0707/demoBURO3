@@ -9,9 +9,35 @@ def send_appointment_email(appointment):
     if not beneficiary.email:
         return  # No enviar si el beneficiario no tiene correo
 
-    subject = "Confirmación de cita - Consultorio Jurídico Icesi"
+    # Determinar si es cita de seguimiento
+    from .models import ReasonType
+    is_followup = appointment.reason_type == ReasonType.CASE_FOLLOW_UP
 
-    message = f"""
+    if is_followup:
+        subject = "Cita de seguimiento agendada - Consultorio Jurídico Icesi"
+        case_info = ""
+        if appointment.case:
+            case_info = f"\n📋 Caso: {appointment.case.title or 'Sin titulo'}\n"
+        
+        message = f"""
+Estimado(a) {beneficiary.name},
+
+Se ha agendado una cita de seguimiento para su caso en el Consultorio Jurídico.
+
+📅 Fecha: {appointment.date.strftime('%d/%m/%Y')}
+⏰ Hora: {appointment.hour}
+📍 Modalidad: {appointment.get_type_display()}{case_info}
+
+Por favor, preséntese con 10 minutos de anticipación.
+
+Si no puede asistir, comuníquese con nosotros para reprogramar su cita.
+
+Atentamente,
+Consultorio Jurídico
+"""
+    else:
+        subject = "Confirmación de cita - Consultorio Jurídico Icesi"
+        message = f"""
 Estimado(a) {beneficiary.name},
 
 Su cita ha sido agendada exitosamente en el Consultorio Jurídico.

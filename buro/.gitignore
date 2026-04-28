@@ -9,6 +9,9 @@ node_modules
 .env*.local
 .DS_Store
 .env
+.env
+*.env
+.env.*
 
 # Python cache files
 __pycache__/
@@ -19,3 +22,6 @@ __pycache__/
 buro_app/__pycache__/
 consultorio/__pycache__/
 consultorio/migrations/__pycache__/
+
+# Base de datos local
+db.sqlite3

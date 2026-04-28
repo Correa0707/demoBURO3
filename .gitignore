@@ -14,3 +14,40 @@ __pycache__/
 
 .vscode/
 .idea/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archivos específicos como los que te salen
+*.pyc
+
+# Entornos virtuales
+venv/
+env/
+ENV/
+.venv/
+
+# Django stuff:
+*.log
+db.sqlite3
+db.sqlite3-journal
+
+# Archivos de configuración local
+.local
+.env
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de VSCode / IDEs
+.vscode/
+.idea/
+
+# Archivos temporales
+*.swp
+*.swo
+
+db.sqlite3

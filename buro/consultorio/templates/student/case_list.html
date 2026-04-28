@@ -1,0 +1,145 @@
+{% extends 'student/base_student.html' %}
+
+{% block title %}Mis Casos - Estudiante{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <div class="mb-6">
+        <h1 class="text-2xl font-semibold text-gray-900">Mis Casos</h1>
+        <p class="text-gray-600 mt-1">Casos legales asignados a ti</p>
+    </div>
+
+    <!-- Filtros -->
+    <div class="bg-white shadow-sm border border-gray-200 p-4 mb-6">
+        <form method="get" class="flex flex-col md:flex-row gap-4">
+            <div class="flex-1">
+                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Buscar</label>
+                <input type="text" name="search" id="search" value="{{ search }}" 
+                    class="w-full px-4 py-2.5 border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                    placeholder="Titulo, beneficiario o descripcion...">
+            </div>
+            <div class="md:w-48">
+                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                <select name="status" id="status" 
+                    class="w-full px-4 py-2.5 border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors bg-white">
+                    <option value="">Todos</option>
+                    {% for value, label in statuses %}
+                    <option value="{{ value }}" {% if current_status == value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="flex items-end">
+                <button type="submit" class="px-6 py-2.5 bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-colors">
+                    Filtrar
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Resumen -->
+    <div class="bg-indigo-50 border border-indigo-100 px-4 py-3 mb-6">
+        <p class="text-sm text-indigo-700">
+            <span class="font-semibold">{% if page_obj %}{{ page_obj.paginator.count }}{% else %}{{ cases|length }}{% endif %}</span> caso(s) encontrado(s)
+            {% if current_status %}con estado "{{ current_status }}"{% endif %}
+        </p>
+    </div>
+
+    <!-- Lista de casos -->
+    {% if cases %}
+    <div class="space-y-4">
+        {% for case in cases %}
+        <article class="bg-white shadow-sm border border-gray-200 p-5 hover:border-indigo-300 transition-colors">
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-3 mb-2">
+                        <h2 class="text-lg font-semibold text-gray-900 truncate">
+                            {{ case.title|default:"Sin titulo" }}
+                        </h2>
+                        <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium
+                            {% if case.status == 'ASSIGNED' %}bg-blue-100 text-blue-800
+                            {% elif case.status == 'INPROCESS' %}bg-yellow-100 text-yellow-800
+                            {% elif case.status == 'COMPLETED' %}bg-green-100 text-green-800
+                            {% elif case.status == 'REJECTED' %}bg-red-100 text-red-800
+                            {% elif case.status == 'CLOSE_FOR_ABSENCE' %}bg-gray-100 text-gray-800
+                            {% else %}bg-gray-100 text-gray-800{% endif %}">
+                            {{ case.get_status_display }}
+                        </span>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                        <div>
+                            <span class="text-gray-500">Beneficiario:</span>
+                            <span class="text-gray-900 font-medium ml-1">{{ case.beneficiary.name }}</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500">Documento:</span>
+                            <span class="text-gray-900 ml-1">{{ case.beneficiary.document }}</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500">Fecha de creacion:</span>
+                            <span class="text-gray-900 ml-1">{{ case.creation_date|date:"d/m/Y" }}</span>
+                        </div>
+                        {% if case.legal_room %}
+                        <div>
+                            <span class="text-gray-500">Sala:</span>
+                            <span class="text-gray-900 ml-1">{{ case.legal_room.name }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    {% if case.description %}
+                    <p class="text-gray-600 text-sm mt-3 line-clamp-2">{{ case.description|truncatewords:30 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="flex-shrink-0">
+                    <a href="{% url 'student-case-detail' case.pk %}" 
+                       class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                        Ver Detalle
+                    </a>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+
+    <!-- Paginacion -->
+    {% if page_obj.has_other_pages %}
+    <div class="mt-6 flex justify-center">
+        <nav class="flex items-center gap-2">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if current_status %}&status={{ current_status }}{% endif %}{% if search %}&search={{ search }}{% endif %}" 
+               class="px-3 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50">
+                Anterior
+            </a>
+            {% endif %}
+            
+            <span class="px-4 py-2 text-gray-700">
+                Pagina {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+            </span>
+            
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if current_status %}&status={{ current_status }}{% endif %}{% if search %}&search={{ search }}{% endif %}" 
+               class="px-3 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50">
+                Siguiente
+            </a>
+            {% endif %}
+        </nav>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <div class="bg-white shadow-sm border border-dashed border-gray-300 p-10 text-center">
+        <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        <p class="text-gray-500 text-lg">No tienes casos asignados</p>
+        <p class="text-gray-400 text-sm mt-1">Los casos que te sean asignados apareceran aqui</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
