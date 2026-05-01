@@ -20,7 +20,7 @@ from .views import (
     # Appointments
     AppointmentListView, AppointmentCreateView, AppointmentDetailView, 
     AppointmentEditView, AppointmentCancelView, AppointmentAttendanceView,
-    AppointmentReassignView, AppointmentAssignStudentView, AppointmentRescheduleView, AppointmentCalendarView, PublicAppointmentView,AppointmentUnassignedView,
+    AppointmentReassignView, AppointmentAssignStudentView, AppointmentRescheduleView, AppointmentCalendarView, PublicAppointmentView,AppointmentUnassignedView, AppointmentAutoReassignView, 
     # Cases
     CaseListView, CaseCreateView, CaseDetailView, CaseEditView,
     CaseAddHistoryView, CaseReassignView, CaseCloseView,
@@ -47,7 +47,8 @@ urlpatterns = [
     path('acceso/', UnifiedLoginView.as_view(), name='unified-login'),
     
     # Home
-    path('', HomeView.as_view(), name='home'),
+    path('', PublicAppointmentView.as_view(), name='beneficiary-schedule-root'),
+    path('home/', HomeView.as_view(), name='home'),
 
     # Profile (for SystemUser - students, secretaries, teachers)
     path('perfil/', ProfileView.as_view(), name='profile'),
@@ -107,6 +108,7 @@ urlpatterns = [
     path('citas/<uuid:pk>/cancelar/', AppointmentCancelView.as_view(), name='appointment-cancel'),
     path('citas/<uuid:pk>/asistencia/', AppointmentAttendanceView.as_view(), name='appointment-attendance'),
     path('citas/<uuid:pk>/reasignar/', AppointmentReassignView.as_view(), name='appointment-reassign'),
+    path('citas/<uuid:pk>/reasignar-automatico/', AppointmentAutoReassignView.as_view(), name='appointment-reassign-auto'),
     path('citas/<uuid:pk>/asignar-estudiante/', AppointmentAssignStudentView.as_view(), name='appointment-assign-student'),
     path('citas/<uuid:pk>/reprogramar/', AppointmentRescheduleView.as_view(), name='appointment-reschedule'),
     

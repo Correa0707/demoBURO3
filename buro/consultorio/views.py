@@ -809,9 +809,60 @@ class AppointmentCalendarView(LoginRequiredMixin, TemplateView):
         context['selected_date'] = selected_date
         context['students'] = Student.objects.filter(available=True)
         context['selected_student'] = student_id
+        context['can_reassign'] = can_manage_appointment_assignments(self.request.user) 
         
         return context
 
+class AppointmentAutoReassignView(LoginRequiredMixin, View):
+    """Reasigna automaticamente una cita a otro estudiante disponible desde el calendario del asesor."""
+
+    def post(self, request, pk):
+        if not can_manage_appointment_assignments(request.user):
+            messages.error(request, 'No tienes permisos para reasignar citas.')
+            return redirect('home')
+
+        appointment = get_object_or_404(Appointment, pk=pk)
+
+        if appointment.status not in [
+            AppointmentStatus.PENDING,
+            AppointmentStatus.CONFIRMED,
+            AppointmentStatus.REASSIGNED,
+        ]:
+            messages.error(request, 'Solo se pueden reasignar citas pendientes, confirmadas o reasignadas.')
+            return redirect('appointment-calendar')
+
+        old_student = appointment.student_assigned
+
+        # Liberar estudiante actual para que no compita consigo mismo
+        appointment.student_assigned = None
+
+        new_student = auto_assign_student(appointment)
+
+        if not new_student:
+            # Restaurar el estudiante anterior si no hay reemplazo
+            appointment.student_assigned = old_student
+            appointment.save(update_fields=['student_assigned', 'updated_at'])
+            messages.warning(request, 'No hay estudiantes disponibles para reasignar esta cita.')
+            return redirect('appointment-calendar')
+
+        appointment.student_assigned = new_student
+        appointment.status = AppointmentStatus.REASSIGNED
+        appointment.save(update_fields=['student_assigned', 'status', 'updated_at'])
+
+        local_dt = timezone.localtime(appointment.date)
+        Notification.objects.create(
+            user=new_student.user,
+            event_type=EventType.APPOINTMENT_REASSIGNED,
+            title='Nueva cita asignada',
+            message=(
+                f'Se te ha reasignado una cita para el '
+                f'{local_dt.strftime("%d/%m/%Y")} {appointment.hour}'
+            )
+        )
+
+        messages.success(request, f'Cita reasignada a {new_student.user.get_full_name()}.')
+        return redirect('appointment-calendar')
+    
 
 # ==================== CASE VIEWS ====================
 

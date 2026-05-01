@@ -4,47 +4,43 @@
 
 {% block content %}
 <div class="max-w-7xl mx-auto">
-    <!-- Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div>
-            <h1 class="text-2xl font-bold text-gray-900">Citas</h1>
-            <p class="text-gray-600">Gestion de citas del consultorio</p>
-        </div>
-        <a href="{% url 'appointment-create' %}" class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg font-medium transition-colors">
+
+    <!-- Filters -->
+   <div class="bg-white shadow-sm border border-gray-200 p-4 mb-6">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Citas</h1>
+        <a href="{% url 'appointment-create' %}" class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 font-medium transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
             </svg>
             Nueva Cita
         </a>
     </div>
-
-    <!-- Filters -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
-        <form method="get" class="flex flex-wrap gap-4">
-            <div>
-                <label class="block text-xs font-medium text-gray-600 mb-1">Estado</label>
-                <select name="status" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
-                    <option value="">Todos</option>
-                    {% for value, label in statuses %}
-                    <option value="{{ value }}" {% if request.GET.status == value %}selected{% endif %}>{{ label }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div>
-                <label class="block text-xs font-medium text-gray-600 mb-1">Desde</label>
-                <input type="date" name="date_from" value="{{ request.GET.date_from }}" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
-            </div>
-            <div>
-                <label class="block text-xs font-medium text-gray-600 mb-1">Hasta</label>
-                <input type="date" name="date_to" value="{{ request.GET.date_to }}" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
-            </div>
-            <div class="flex items-end">
-                <button type="submit" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors text-sm">
-                    Filtrar
-                </button>
-            </div>
-        </form>
-    </div>
+    <form method="get" class="flex flex-wrap gap-4">
+        <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Estado</label>
+            <select name="status" class="px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
+                <option value="">Todos</option>
+                {% for value, label in statuses %}
+                <option value="{{ value }}" {% if request.GET.status == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Desde</label>
+            <input type="date" name="date_from" value="{{ request.GET.date_from }}" class="px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
+        </div>
+        <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Hasta</label>
+            <input type="date" name="date_to" value="{{ request.GET.date_to }}" class="px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
+        </div>
+        <div class="flex items-end">
+            <button type="submit" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 font-medium transition-colors text-sm">
+                Filtrar
+            </button>
+        </div>
+    </form>
+</div>
 
     <!-- Table -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
