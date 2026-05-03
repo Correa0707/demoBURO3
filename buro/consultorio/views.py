@@ -811,6 +811,9 @@ class AppointmentCalendarView(LoginRequiredMixin, TemplateView):
         context['selected_student'] = student_id
         context['can_reassign'] = can_manage_appointment_assignments(self.request.user)
         
+        # DEBUG: Verificar permisos del usuario
+        print(f"[v0] Usuario: {self.request.user.username}, Rol: {getattr(self.request.user, 'role', 'NO ROLE')}, can_reassign: {context['can_reassign']}")
+        
         return context
 
 
