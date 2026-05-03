@@ -387,6 +387,20 @@
                         </p>
                     {% endif %}
 
+                    <div class="flex items-start gap-2">
+                        <input type="checkbox" name="vulnerable_declaration" required
+                               class="schedule-checkbox mt-1"
+                               {% if form.vulnerable_declaration.value %}checked{% endif %}>
+                        <label class="text-sm text-gray-700">
+                            Declaro que pertenezco a población vulnerable entiendo que el Consultorio solo atiende a esta población conforme a la Ley 2113 de 2021.
+                        </label>
+                    </div>
+                    {% if form.vulnerable_declaration.errors %}
+                        <p class="text-red-500 text-sm">
+                            {{ form.vulnerable_declaration.errors.0 }}
+                        </p>
+                    {% endif %}
+
                 </div>
 
                 <div class="mt-6">

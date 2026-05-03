@@ -3,6 +3,219 @@
 {% block title %}Agendar Cita - Consultorio Juridico{% endblock %}
 
 {% block content %}
+
+<style>
+    .schedule-page {
+        position: relative;
+        min-height: 100vh;
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    .schedule-content {
+        position: relative;
+        z-index: 1;
+        padding: 48px 40px;
+    }
+
+    .schedule-grid {
+        display: grid;
+        grid-template-columns: minmax(320px, 40%) 1fr minmax(240px, 25%);
+        gap: 32px;
+        align-items: flex-start;
+    }
+
+    .schedule-form-card {
+        background: #ffffff;
+        padding: 40px;
+        max-width: 550px;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+    }
+
+    .schedule-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 20px;
+    }
+
+    .schedule-label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #333333;
+        margin-bottom: 6px;
+    }
+
+    .schedule-required {
+        color: #ef4444;
+        margin-left: 4px;
+    }
+
+    .schedule-input,
+    .schedule-select {
+        width: 100%;
+        border: 1px solid #d1d5db;
+        padding: 12px;
+        font-size: 14px;
+        color: #111827;
+        background: #ffffff;
+    }
+
+    .schedule-checkbox {
+        width: 16px;
+        height: 16px;
+    }
+
+    .schedule-button {
+        width: 100%;
+        background: #5B4FE8;
+        color: #ffffff;
+        padding: 15px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+    }
+
+    .schedule-panel {
+        background: #5454E9;
+        padding: 30px;
+        color: #ffffff;
+    }
+
+    .schedule-panel-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 6px;
+    }
+
+    .schedule-panel-text {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
+        margin-bottom: 14px;
+    }
+
+    .schedule-panel-button {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background: #ffffff;
+        color: #5454E9;
+        font-weight: 600;
+        font-size: 14px;
+        padding: 12px 24px;
+    }
+
+    .schedule-calendar {
+        border: 1px solid #e5e7eb;
+        padding: 12px;
+        background: #ffffff;
+    }
+
+    .calendar-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .calendar-nav {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border: 1px solid #d1d5db;
+        background: #ffffff;
+        color: #333333;
+        font-weight: 600;
+    }
+
+    .calendar-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333333;
+    }
+
+    .calendar-weekdays,
+    .calendar-days {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 6px;
+    }
+
+    .calendar-weekdays {
+        margin-bottom: 6px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #6b7280;
+    }
+
+    .calendar-day {
+        height: 34px;
+        border: 1px solid transparent;
+        font-size: 13px;
+        font-weight: 600;
+        color: #374151;
+        background: transparent;
+    }
+
+    .calendar-day.is-available {
+        border-color: #e5e7eb;
+        background: #ffffff;
+        cursor: pointer;
+    }
+
+    .calendar-day.is-today {
+        border-color: rgba(91, 79, 232, 0.4);
+        color: #5B4FE8;
+    }
+
+    .calendar-day.is-selected {
+        background: #5B4FE8;
+        border-color: #5B4FE8;
+        color: #ffffff;
+    }
+
+    .calendar-day.is-disabled {
+        color: #cbd5f5;
+        cursor: not-allowed;
+    }
+
+    .schedule-logo {
+        position: fixed;
+        right: 32px;
+        bottom: 24px;
+        width: 190px;
+        z-index: 1;
+    }
+
+    @media (max-width: 1024px) {
+        .schedule-content {
+            padding: 32px 20px 40px;
+        }
+
+        .schedule-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .schedule-spacer {
+            display: none;
+        }
+
+        .schedule-form-card {
+            max-width: 100%;
+        }
+
+        .schedule-logo {
+            position: static;
+            width: 150px;
+            margin-top: 24px;
+        }
+    }
+</style>
+
 <div class="max-w-2xl mx-auto">
     <!-- Header -->
     <div class="mb-6">
@@ -36,12 +249,55 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Fecha y Hora -->
-                    <div>
-                        <label for="id_date" class="block text-sm font-medium text-gray-700 mb-1">Fecha y Hora *</label>
-                        {{ form.date }}
-                        {% if form.date.errors %}
-                        <p class="text-red-600 text-sm mt-1">{{ form.date.errors.0 }}</p>
-                        {% endif %}
+                    <div class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4">
+                        <div>
+                            <label class="schedule-label">
+                                Fecha<span class="schedule-required">*</span>
+                            </label>
+                            <select name="date" id="dateSelect" required
+                                    class="schedule-select hidden">
+                                <option value="">Seleccione una fecha</option>
+                                {% for d in available_dates %}
+                                    <option value="{{ d|date:'Y-m-d' }}"
+                                        {% if form.date.value == d|date:'Y-m-d' %}selected{% endif %}>
+                                        {{ d|date:'d/m/Y' }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <div class="schedule-calendar" id="calendar">
+                                <div class="calendar-header">
+                                    <button type="button" id="prev-month" class="calendar-nav">‹</button>
+                                    <p id="calendar-month-label" class="calendar-title">Mes</p>
+                                    <button type="button" id="next-month" class="calendar-nav">›</button>
+                                </div>
+                                <div class="calendar-weekdays">
+                                    <span class="text-center">Lu</span>
+                                    <span class="text-center">Ma</span>
+                                    <span class="text-center">Mi</span>
+                                    <span class="text-center">Ju</span>
+                                    <span class="text-center">Vi</span>
+                                    <span class="text-center">Sa</span>
+                                    <span class="text-center">Do</span>
+                                </div>
+                                <div id="calendar-days" class="calendar-days"></div>
+                            </div>
+                            {% if form.date.errors %}
+                                <p class="text-red-500 text-sm">{{ form.date.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <label class="schedule-label">
+                                Hora<span class="schedule-required">*</span>
+                            </label>
+                            <select name="hour" id="hourSelect" required
+                                    class="schedule-select">
+                                <option value="">Selecciona una opción</option>
+                            </select>
+                            {% if form.hour.errors %}
+                                <p class="text-red-500 text-sm">{{ form.hour.errors.0 }}</p>
+                            {% endif %}
+                        </div>
                     </div>
 
                     <!-- Tipo de Cita -->
@@ -88,4 +344,146 @@
         </form>
     </div>
 </div>
+
+
+{{ available_dates_json|json_script:"available-dates-data" }}
+{{ hours|json_script:"available-hours-data" }}
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const availableDates = JSON.parse(
+        document.getElementById('available-dates-data').textContent
+    );
+
+    const availableHours = JSON.parse(
+        document.getElementById('available-hours-data').textContent
+    );
+
+    const dateSelect = document.getElementById('dateSelect');
+    const hourSelect = document.getElementById('hourSelect');
+
+    // Cargar horas disponibles
+    function loadHours(date) {
+        hourSelect.innerHTML = '<option value="">Seleccione una hora</option>';
+
+        if (availableHours[date]) {
+            availableHours[date].forEach(hour => {
+                const option = document.createElement('option');
+                option.value = hour;
+                option.textContent = hour;
+                hourSelect.appendChild(option);
+            });
+        }
+    }
+
+    // Evento al cambiar fecha manualmente
+    dateSelect.addEventListener('change', function () {
+        loadHours(this.value);
+    });
+
+    // Cargar horas si hay fecha seleccionada (POST con errores)
+    if (dateSelect.value) {
+        loadHours(dateSelect.value);
+    }
+
+    const monthNames = [
+        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ];
+    const availableSet = new Set(availableDates);
+    const todayIso = new Date().toISOString().slice(0, 10);
+    const todayDate = new Date(todayIso + 'T00:00:00');
+
+    let selectedDateIso = dateSelect.value || (availableDates[0] || todayIso);
+    let activeMonthDate = new Date(selectedDateIso + 'T00:00:00');
+
+    const calendarDays = document.getElementById('calendar-days');
+    const monthLabel = document.getElementById('calendar-month-label');
+
+    function pad(value) {
+        return value.toString().padStart(2, '0');
+    }
+
+    function toIsoDate(dateObj) {
+        return dateObj.getFullYear() + '-' + pad(dateObj.getMonth() + 1) + '-' + pad(dateObj.getDate());
+    }
+
+    function renderCalendar() {
+        const year = activeMonthDate.getFullYear();
+        const month = activeMonthDate.getMonth();
+        monthLabel.textContent = monthNames[month] + ' ' + year;
+
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        const mondayOffset = (firstDay.getDay() + 6) % 7;
+
+        calendarDays.innerHTML = '';
+
+        for (let i = 0; i < mondayOffset; i += 1) {
+            const filler = document.createElement('div');
+            filler.className = 'h-8';
+            calendarDays.appendChild(filler);
+        }
+
+        for (let day = 1; day <= lastDay.getDate(); day += 1) {
+            const cellDate = new Date(year, month, day);
+            const cellIso = toIsoDate(cellDate);
+            const isToday = cellIso === todayIso;
+            const isSelected = cellIso === selectedDateIso;
+            const isAvailable = availableSet.has(cellIso);
+
+            const dayButton = document.createElement('button');
+            dayButton.type = 'button';
+            dayButton.dataset.date = cellIso;
+            dayButton.className = 'calendar-day';
+            dayButton.textContent = day;
+
+            if (isAvailable) {
+                dayButton.classList.add('is-available');
+            } else {
+                dayButton.classList.add('is-disabled');
+                dayButton.disabled = true;
+            }
+
+            if (isToday) {
+                dayButton.classList.add('is-today');
+            }
+
+            if (isSelected) {
+                dayButton.classList.add('is-selected');
+            }
+
+            dayButton.addEventListener('click', function () {
+                if (!availableSet.has(dayButton.dataset.date)) {
+                    alert('No hay cupos disponibles para esta fecha.');
+                    return;
+                }
+                selectedDateIso = dayButton.dataset.date;
+                dateSelect.value = selectedDateIso;
+                loadHours(selectedDateIso);
+                renderCalendar();
+            });
+
+            calendarDays.appendChild(dayButton);
+        }
+    }
+
+    if (selectedDateIso) {
+        dateSelect.value = selectedDateIso;
+        loadHours(selectedDateIso);
+    }
+
+    document.getElementById('prev-month').addEventListener('click', function () {
+        activeMonthDate.setMonth(activeMonthDate.getMonth() - 1);
+        renderCalendar();
+    });
+
+    document.getElementById('next-month').addEventListener('click', function () {
+        activeMonthDate.setMonth(activeMonthDate.getMonth() + 1);
+        renderCalendar();
+    });
+
+    renderCalendar();
+});
+</script>
 {% endblock %}

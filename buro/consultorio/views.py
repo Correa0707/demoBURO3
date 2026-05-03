@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView, UpdateView, DeleteView, CreateView
+from django.views.generic import TemplateView, ListView, DetailView, UpdateView, DeleteView, CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -442,9 +442,8 @@ class AppointmentListView(LoginRequiredMixin, ListView):
         return context
 
 
-class AppointmentCreateView(LoginRequiredMixin, CreateView):
+class AppointmentCreateView(LoginRequiredMixin, FormView):
     """Crear nueva cita"""
-    model = Appointment
     form_class = AppointmentForm
     template_name = 'appointments/create.html'
     success_url = reverse_lazy('appointment-list')
@@ -454,39 +453,130 @@ class AppointmentCreateView(LoginRequiredMixin, CreateView):
             messages.error(request, 'No tienes permisos para agendar citas desde este modulo.')
             return redirect('student-appointment-list')
         return super().dispatch(request, *args, **kwargs)
+
+    def get_available_dates(self):
+        today = timezone.now().date()
+        available_dates = []
+
+        for i in range(15):
+            day = today + timedelta(days=i)
+
+            if day.weekday() < 5:
+                count = Appointment.objects.filter(date__date=day).count()
+
+                if count < len(AppointmentHour.choices):
+                    available_dates.append(day)
+
+        return available_dates
+
+    def get_available_hours_by_date(self, dates):
+        result = {}
+
+        for date in dates:
+            taken_hours = Appointment.objects.filter(
+                date__date=date
+            ).values_list('hour', flat=True)
+
+            available = [
+                hour for hour, _ in AppointmentHour.choices
+                if hour not in taken_hours
+            ]
+
+            result[str(date)] = available
+
+        return result
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        dates = self.get_available_dates()
+        hours = self.get_available_hours_by_date(dates)
+
+        context['available_dates'] = dates
+        context['available_dates_json'] = [str(d) for d in dates]
+        context['hours'] = hours
+
+        return context
     
     def form_valid(self, form):
-        self.object = form.save()
 
-         # === AUTO-ASIGNACIÓN ===
+        selected_date = form.cleaned_data.get('date')
+        selected_hour = form.cleaned_data.get('hour')
+
+        dates = self.get_available_dates()
+        hours = self.get_available_hours_by_date(dates)
+
+        if isinstance(selected_date, datetime):
+            selected_date_only = selected_date.date()
+        else:
+            selected_date_only = selected_date
+
+        date_key = selected_date_only.isoformat()
+
+        if selected_hour not in hours.get(date_key, []):
+            form.add_error(None, 'La hora seleccionada ya no está disponible.')
+            return self.form_invalid(form)
+        
+
+        hour_obj = datetime.strptime(selected_hour, "%H:%M").time()
+
+
+        appointment_datetime = timezone.make_aware(
+            datetime.combine(
+                selected_date,
+                hour_obj
+            )
+        )
+
+        self.object = Appointment.objects.create(
+            beneficiary=form.cleaned_data['beneficiary'],
+            student_assigned=form.cleaned_data['student_assigned'],
+            date=appointment_datetime,
+            hour=selected_hour,
+            type=form.cleaned_data['type'],
+            reason_type=form.cleaned_data['reason_type'],
+            status=AppointmentStatus.PENDING,
+        )
+
+        # === AUTO-ASIGNACIÓN ===
         student = auto_assign_student(self.object)
+
         if student:
             self.object.student_assigned = student
             self.object.status = AppointmentStatus.CONFIRMED
-            self.object.save(update_fields=['student_assigned', 'status', 'updated_at'])
+
+            self.object.save(update_fields=[
+                'student_assigned',
+                'status',
+                'updated_at'
+            ])
+
             Notification.objects.create(
                 user=student.user,
                 event_type=EventType.APPOINTMENT_REASSIGNED,
                 title='Nueva cita asignada',
-                message=f'Se te ha asignado automáticamente una cita para el '
-                        f'{timezone.localtime(self.object.date).strftime("%d/%m/%Y")} '
-                        f'{self.object.hour}'
+                message=(
+                    f'Se te ha asignado automáticamente una cita para el '
+                    f'{timezone.localtime(self.object.date).strftime("%d/%m/%Y")} '
+                    f'{self.object.hour}'
+                )
             )
-        # Si no hay estudiante disponible, la cita queda en PENDING (comportamiento por defecto del modelo)
-        # === FIN AUTO-ASIGNACIÓN === 
 
         Notification.objects.create(
             beneficiary=self.object.beneficiary,
             event_type=EventType.APPOINTMENT_SCHEDULED,
             title='Nueva cita agendada',
-            message=f'Se ha agendado una cita para el {self.object.date.strftime("%d/%m/%Y %H:%M")}'
+            message=(
+                f'Se ha agendado una cita para el '
+                f'{self.object.date.strftime("%d/%m/%Y %H:%M")}'
+            )
         )
 
-        #enviar email de confirmación
         send_appointment_email(self.object)
 
         messages.success(self.request, 'Cita agendada exitosamente')
-        return super().form_valid(form)
+
+        return redirect(self.success_url)
 
 
     

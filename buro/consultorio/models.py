@@ -26,7 +26,6 @@ class AppointmentHour(models.TextChoices):
     FIRST = '14:00', '14:00'
     SECOND = '14:45', '14:45'
     THIRD = '15:30', '15:30'
-    LAST = '16:00', '16:00'
 
 
 

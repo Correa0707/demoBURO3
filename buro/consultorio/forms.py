@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from datetime import datetime
+from django.utils import timezone
 from .models import (
     Beneficiary, Appointment, Communication, AppointmentHour, 
     SystemUser, Student, AppointmentType, AppointmentStatus, 
@@ -80,33 +82,23 @@ class BeneficiaryEditForm(forms.ModelForm):
 
 # ==================== APPOINTMENT FORMS ====================
 
-class AppointmentForm(forms.ModelForm):
+class AppointmentForm(forms.Form):
     """Formulario para crear citas"""
-    class Meta:
-        model = Appointment
-        fields = ['beneficiary', 'student_assigned', 'date', 'type', 'reason_type']
-        widgets = {
-            'beneficiary': forms.Select(attrs={'class': COMMON_SELECT_CLASS}),
-            'student_assigned': forms.Select(attrs={'class': COMMON_SELECT_CLASS}),
-            'date': forms.DateTimeInput(attrs={
-                'class': COMMON_INPUT_CLASS, 
-                'type': 'datetime-local'
-            }),
-            'type': forms.Select(attrs={'class': COMMON_SELECT_CLASS}),
-            'reason_type': forms.Select(attrs={'class': COMMON_SELECT_CLASS}),
-        }
-        labels = {
-            'beneficiary': 'Beneficiario',
-            'student_assigned': 'Estudiante Asignado',
-            'date': 'Fecha y Hora',
-            'type': 'Tipo de Cita',
-            'reason_type': 'Motivo de la Cita',
-        }
+    beneficiary = forms.ModelChoiceField(
+        queryset=Beneficiary.objects.all(),
+        widget=forms.Select(attrs={'class': COMMON_SELECT_CLASS})
+    )
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['student_assigned'].queryset = Student.objects.filter(available=True)
-        self.fields['student_assigned'].required = False
+    student_assigned = forms.ModelChoiceField(
+        queryset=Student.objects.filter(available=True),
+        required=False,
+        widget=forms.Select(attrs={'class': COMMON_SELECT_CLASS})
+    )
+
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    hour = forms.ChoiceField(choices=AppointmentHour.choices)
+    type = forms.ChoiceField(choices=AppointmentType.choices)
+    reason_type = forms.ChoiceField(choices=ReasonType.choices)
 
 class PublicAppointmentForm(forms.Form):
     name = forms.CharField(label="Nombre completo", max_length=200)
@@ -121,7 +113,7 @@ class PublicAppointmentForm(forms.Form):
     accept_data = forms.BooleanField(label="Acepto el tratamiento de datos", required=True)
     vulnerable_declaration = forms.BooleanField(
         label="Declaro que pertenezco a una poblacion vulnerable",
-        required=False,
+        required=True,
     )
 
 class AttendanceForm(forms.Form):
@@ -433,7 +425,7 @@ class SystemUserPasswordForm(forms.Form):
 
 # ==================== APPOINTMENT FORMS ====================
 
-class AppointmentForm(forms.ModelForm):
+class AppointmentForm2(forms.ModelForm):
     """Formulario para crear citas"""
     class Meta:
         model = Appointment
